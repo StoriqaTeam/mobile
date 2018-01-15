@@ -9,8 +9,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+import Button from './components/Buttons';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -19,7 +20,33 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+const gray = '#F5FCFF';
+const gray2 = '#333333';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: gray,
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: gray2,
+    marginBottom: 5,
+  },
+});
+
 export default class App extends Component<{}> {
+  handleOnPressButton = () => {
+    console.log('button pressed');
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -32,26 +59,9 @@ export default class App extends Component<{}> {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        <Button text="Touch ME" primary />
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
