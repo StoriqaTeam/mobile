@@ -11,7 +11,8 @@
     }
   },
   "extends": [
-    "react-native",
+    "esnext",
+    "plugin:react/recommended",
     "airbnb"
   ],
   "rules": {
