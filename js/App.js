@@ -5,11 +5,15 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { graphql, QueryRenderer } from 'react-relay';
+
+import relayEnvironment from './relay/relayEnvironment';
 
 const gray = '#F5FCFF';
 const gray2 = '#333333';
@@ -34,12 +38,30 @@ const styles = StyleSheet.create({
 });
 
 const App = () => (
-  <View style={styles.container}>
-    <Text style={styles.instructions}>
-      STORIQA APP
-    </Text>
-  </View>
+  <QueryRenderer
+    environment={relayEnvironment}
+    query={graphql`
+      query App_version_Query {
+        apiVersion
+      }
+    `}
+    render={({ props }) => (
+      <View style={styles.container}>
+        <Text style={styles.instructions}>
+          STORIQA APP ${props && props.apiVersion && `(api ver. ${props.apiVersion})`}
+        </Text>
+      </View>
+    )}
+  />
 );
+
+App.propTypes = {
+  apiVersion: PropTypes.string,
+};
+
+App.defaultProps = {
+  apiVersion: '',
+};
 
 export default App;
 
