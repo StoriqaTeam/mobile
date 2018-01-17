@@ -1,5 +1,6 @@
 import 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
+import App from './App';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
 
@@ -20,6 +21,9 @@ const StoreNavigator = StackNavigator({
   },
   Detail: {
     screen: stores.DetailScreen,
+  },
+  App: {
+    screen: App,
   },
 });
 

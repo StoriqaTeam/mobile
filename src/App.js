@@ -4,21 +4,16 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import Button from './components/Buttons';
+import { graphql, QueryRenderer } from 'react-relay';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import relayEnvironment from './relay/relayEnvironment';
 
 const gray = '#F5FCFF';
 const gray2 = '#333333';
@@ -42,26 +37,31 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class App extends Component<{}> {
-  handleOnPressButton = () => {
-    console.log('button pressed');
-  }
-
-  render() {
-    return (
+const App = () => (
+  <QueryRenderer
+    environment={relayEnvironment}
+    query={graphql`
+      query App_version_Query {
+        apiVersion
+      }
+    `}
+    render={({ props }) => (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
         <Text style={styles.instructions}>
-          To get started, edit App.js
+          STORIQA APP ${props && props.apiVersion && `(api ver. ${props.apiVersion})`}
         </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-        <Button text="Touch ME" primary />
       </View>
-    );
-  }
-}
+    )}
+  />
+);
+
+App.propTypes = {
+  apiVersion: PropTypes.string,
+};
+
+App.defaultProps = {
+  apiVersion: '',
+};
+
+export default App;
 

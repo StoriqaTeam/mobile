@@ -13,6 +13,9 @@ export default ({ navigation: { navigate } }: ScreenType) => (
     <TouchableOpacity onPress={() => navigate('Detail')}>
       <Text style={{ color: 'blue' }}>Detail</Text>
     </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigate('App')}>
+      <Text style={{ color: 'blue' }}>App graphql</Text>
+    </TouchableOpacity>
     <TouchableOpacity onPress={() => navigate('AuthTab')}>
       <Text style={{ color: 'blue' }}>AuthTab</Text>
     </TouchableOpacity>
