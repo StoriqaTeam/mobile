@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "relay": "yarn updateSchema && relay-compiler --src ./js --schema ./data/schema.json --watch",
+    "relay": "yarn updateSchema && relay-compiler --src ./src --schema ./data/schema.json --watch",
     "updateSchema": "BABEL_ENV=development NODE_ENV=development babel-node scripts/updateSchema.js",
     "flow": "./node_modules/.bin/flow ./src"
   },
