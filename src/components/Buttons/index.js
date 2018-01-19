@@ -9,16 +9,19 @@ import styles from './styles';
 
 type ButtonProps = {
   text: string,
-  primary: boolean,
+  primary?: boolean,
   secondary?: boolean,
+  onPress: () => void,
 }
 
-function handleOnPressButton() {
-  console.log('button pressed');
-}
 
-export default ({ text, primary, secondary }: ButtonProps) => (
-  <TouchableOpacity onPress={handleOnPressButton}>
+const Button = ({
+  text,
+  primary,
+  secondary,
+  onPress,
+}: ButtonProps) => (
+  <TouchableOpacity onPress={onPress}>
     <View style={[styles.button, primary && styles.primaryBG, secondary && styles.secondaryBG]}>
       <Text
         style={[
@@ -32,3 +35,6 @@ export default ({ text, primary, secondary }: ButtonProps) => (
     </View>
   </TouchableOpacity>
 );
+// Button.defau
+
+export default Button;

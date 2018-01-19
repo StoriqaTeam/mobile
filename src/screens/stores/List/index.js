@@ -1,26 +1,25 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import type { NavigationState } from 'react-navigation/src/TypeDefinition';
+import { Actions } from 'react-native-router-flux';
 
 
-type ScreenType = {
-  navigation: NavigationState,
-}
-
-export default ({ navigation: { navigate } }: ScreenType) => (
+export default () => (
   <View>
     <Text style={{ fontSize: 25 }}>Stores List</Text>
-    <TouchableOpacity onPress={() => navigate('Detail')}>
+    <TouchableOpacity onPress={Actions.details}>
       <Text style={{ color: 'blue' }}>Detail</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigate('App')}>
-      <Text style={{ color: 'blue' }}>App graphql</Text>
+    <TouchableOpacity onPress={Actions.home}>
+      <Text style={{ color: 'blue' }}>Home graphql</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigate('AuthTab')}>
-      <Text style={{ color: 'blue' }}>AuthTab</Text>
+    <TouchableOpacity onPress={Actions.root}>
+      <Text style={{ color: 'blue' }}>Root</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigate('Login')}>
+    <TouchableOpacity onPress={Actions.login}>
       <Text style={{ color: 'blue' }}>Login</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={Actions.register}>
+      <Text style={{ color: 'blue' }}>Register</Text>
     </TouchableOpacity>
   </View>
 );

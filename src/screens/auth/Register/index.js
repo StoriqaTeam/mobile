@@ -1,16 +1,26 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import type { NavigationState } from 'react-navigation/src/TypeDefinition';
+import { Actions } from 'react-native-router-flux';
 
-type ScreenType = {
-  navigation: NavigationState,
+
+export default class Register extends React.Component {
+  static navigationOptions = () => (
+    {
+      headerRight: (
+        <TouchableOpacity>
+          <Text>Right button</Text>
+        </TouchableOpacity>
+      ),
+    }
+  )
+  render() {
+    return (
+      <View>
+        <Text style={{ fontSize: 25 }}>Register</Text>
+        <TouchableOpacity onPress={() => Actions.login()}>
+          <Text style={{ color: 'blue' }}>login</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
-
-export default ({ navigation: { navigate } }: ScreenType) => (
-  <View>
-    <Text style={{ fontSize: 25 }}>Register</Text>
-    <TouchableOpacity onPress={() => navigate('Login')}>
-      <Text style={{ color: 'blue' }}>login</Text>
-    </TouchableOpacity>
-  </View>
-);
