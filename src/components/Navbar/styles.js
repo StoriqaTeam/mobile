@@ -24,7 +24,8 @@ export default StyleSheet.create({
   },
   rightButtonContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import StoriqaIcon from '../../../components/Icons';
 import MainLayout from '../../../layouts/MainLayout';
 
 
@@ -11,11 +12,14 @@ const LeftButton = (): Node => (
     <Text>Back</Text>
   </TouchableOpacity>
 );
-const RightButton = () => (
-  <TouchableOpacity onPress={Actions.register}>
-    <Text>Register</Text>
-  </TouchableOpacity>
-);
+const RightButton = () => [
+  <TouchableOpacity key="person" onPress={Actions.register}>
+    <StoriqaIcon name="person" size={20} color="#505050" />
+  </TouchableOpacity>,
+  <TouchableOpacity key="cart" onPress={Actions.pop}>
+    <StoriqaIcon name="cart" size={20} color="#505050" />
+  </TouchableOpacity>,
+];
 
 export default () => (
   <MainLayout
