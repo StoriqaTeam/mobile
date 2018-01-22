@@ -8,8 +8,8 @@ import * as stores from './screens/stores';
 export default () => (
   <RNRF.Router>
     <RNRF.Stack key="root" hideNavBar>
-      <RNRF.Scene key="login" component={auth.LoginScreen} title="Login" />
-      <RNRF.Scene key="register" component={auth.RegisterScreen} title="Register" />
+      <RNRF.Scene key="login" component={auth.Login} title="Login" />
+      <RNRF.Scene key="register" component={auth.Register} title="Register" />
       <RNRF.Stack key="app">
         <RNRF.Scene key="list" component={stores.ListScreen} title="List Screen" />
         <RNRF.Scene key="details" component={stores.DetailScreen} title="Details screen" />
