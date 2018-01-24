@@ -1,6 +1,6 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
-import * as RNRF from 'react-native-router-flux';
+import { View, AsyncStorage, StatusBar } from 'react-native';
+import { Router, Modal, Tabs, Stack, Scene, Actions } from 'react-native-router-flux';
 import App from './App';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
@@ -9,24 +9,37 @@ import * as stores from './screens/stores';
 function handleCheckAuth() {
   AsyncStorage.getItem('@Storiqa:token').then((token) => {
     if (!token) {
-      RNRF.Actions.login();
+      Actions.login();
     }
   });
 }
 
 
 export default () => (
-  <RNRF.Router>
-    <RNRF.Stack key="root" hideNavBar>
-      <RNRF.Stack key="app">
-        <RNRF.Scene key="list" on={handleCheckAuth} component={stores.ListScreen} title="List Screen" />
-        <RNRF.Scene key="details" on={handleCheckAuth} component={stores.DetailScreen} title="Details screen" />
-        <RNRF.Scene key="home" on={handleCheckAuth} component={App} title="" />
-      </RNRF.Stack>
-      <RNRF.Stack key="auth" modal>
-        <RNRF.Scene key="login" component={auth.Login} title="Login" />
-        <RNRF.Scene key="register" component={auth.Register} title="Register" />
-      </RNRF.Stack>
-    </RNRF.Stack>
-  </RNRF.Router>
+  <View style={{ flex: 1 }}>
+    <Router>
+      <Modal hideNavBar>
+        <Stack key="root">
+          <Scene key="list" initial component={stores.ListScreen} title="List Screen" />
+          <Scene key="details" component={stores.DetailScreen} title="Details screen" />
+        </Stack>
+        <Stack key="payment">
+          <Scene key="home" on={handleCheckAuth} component={App} title="" />
+        </Stack>
+        <Tabs
+          swipeEnabled
+          animationEnabled
+          hideNavBar
+          tabBarPosition="top"
+          tabStyle={{ backgroundColor: '#fff' }}
+          labelStyle={{ color: '#000' }}
+          tabBarStyle={{ backgroundColor: '#fff' }}
+          activeTintColor="#2fbafd"
+        >
+          <Scene key="login" component={auth.Login} title="Login" hideNavBar />
+          <Scene key="register" component={auth.Register} title="Register" hideNavBar />
+        </Tabs>
+      </Modal>
+    </Router>
+  </View>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import MainLayout from '../../layouts/MainLayout';
 
 
 export default class Register extends React.Component {
@@ -15,12 +16,15 @@ export default class Register extends React.Component {
   )
   render() {
     return (
-      <View>
-        <Text style={{ fontSize: 25 }}>Register</Text>
-        <TouchableOpacity onPress={() => Actions.login()}>
-          <Text style={{ color: 'blue' }}>login</Text>
-        </TouchableOpacity>
-      </View>
+      <MainLayout>
+        <View>
+          <StatusBar hidden />
+          <Text style={{ fontSize: 25 }}>Register</Text>
+          <TouchableOpacity onPress={() => Actions.login()}>
+            <Text style={{ color: 'blue' }}>login</Text>
+          </TouchableOpacity>
+        </View>
+      </MainLayout>
     );
   }
 }
