@@ -4,8 +4,10 @@ import type { Node } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { graphql, QueryRenderer } from 'react-relay';
+import styles from './Login.styles';
 import relayEnvironment from '../../relay/relayEnvironment';
 import StoriqaIcon from '../../components/Icons';
+import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 
 
@@ -29,31 +31,28 @@ const LoginQuery = graphql`
   }
 `;
 
-export default () => (
+const Login = () => (
   <QueryRenderer
     environment={relayEnvironment}
     query={LoginQuery}
     render={({ error, props }) => {
       if (error) return <Text>Login screen error: {error}</Text>;
       return (
-        <MainLayout
-          navbar={{
-            title: <Text>Login title</Text>,
-            leftButton: <LeftButton />,
-            rightButton: <RightButton />,
-          }}
-        >
-          <View>
+        <MainLayout>
+          <View style={styles.wrapper}>
             <Text style={{ fontSize: 25 }}>Login (apiVersion: {props && props.apiVersion})</Text>
-            <TouchableOpacity onPress={() => Actions.register()}>
-              <Text style={{ color: 'blue' }}>register</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => Actions.app()}>
-              <Text style={{ color: 'blue' }}>Home</Text>
-            </TouchableOpacity>
+            <Button onPress={Actions.register} text="Register" primary />
+            <Button onPress={Actions.app} text="Home" />
           </View>
         </MainLayout>
       );
     }}
   />
 );
+
+Login.navigationOptions = () => ({
+  title: 'Hello Login Screen',
+  headerBackTitle: 'Back title',
+});
+
+export default Login;

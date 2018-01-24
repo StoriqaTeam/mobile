@@ -15,6 +15,10 @@
     run in terminal `rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json`
     проблема началась с версии RN 0.52 ожидаем фиксов
 
+- в любой непонятной ситуевине `watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start -- --reset-cache`
+
+- Native module cannot be null. (нельзя импортировать RN как `import * as RN from 'react-native'`)
+
 ### Добавление кастомных шрифтов:
 
 - сгенерировать новый шрифт с помощью http://fontello.com/ для этого можно взять текущий config.json в src/font

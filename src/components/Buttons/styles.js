@@ -10,6 +10,8 @@ export default StyleSheet.create({
   button: {
     backgroundColor: gray,
     padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   primaryBG: {
     backgroundColor: primary,
