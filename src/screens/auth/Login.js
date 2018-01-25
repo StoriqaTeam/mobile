@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
-import type { Node, ComponentType } from 'react';
+import type { Node } from 'react';
 import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { graphql, commitMutation, QueryRenderer } from 'react-relay';
 import styles from './Login.styles';
 import relayEnvironment from '../../relay/relayEnvironment';
 // import StoriqaIcon from '../../components/Icons';
-import Button, { HeaderButton } from '../../components/Buttons';
+import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 
 
@@ -21,9 +21,25 @@ import MainLayout from '../../layouts/MainLayout';
 // ];
 
 
+// const LoginQuery = graphql`
+//   query Login_version_Query($id: ID!) {
+//     viewer {
+//       user(id: $id) {
+//         id
+//         email
+//       }
+//     }
+//   }
+// `;
+
 const LoginQuery = graphql`
   query Login_version_Query {
-    apiVersion
+    viewer {
+      currentUser {
+        id
+        email
+      }
+    }
   }
 `;
 
@@ -95,12 +111,18 @@ class Login extends React.Component<{}, StateType> {
   }
 
   render() {
+    AsyncStorage.getItem('@Storiqa:token', (err, result) => {
+      console.log('---- Login token result: ', result);
+    });
     return (
       <QueryRenderer
         environment={relayEnvironment}
         query={LoginQuery}
         render={({ error, props }): Node => {
+          console.log('*** QueryRenderer error: ', error);
+          console.log('*** QueryRenderer props: ', props);
           if (error) return <Text>Login screen error: {error}</Text>;
+          if (!props) return <Text>Loading...</Text>;
           return (
             <MainLayout
               style={{
