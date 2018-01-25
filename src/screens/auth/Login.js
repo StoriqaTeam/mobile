@@ -4,33 +4,12 @@ import type { Node } from 'react';
 import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { graphql, commitMutation, QueryRenderer } from 'react-relay';
-import styles from './Login.styles';
+import styles from './styles';
 import relayEnvironment from '../../relay/relayEnvironment';
 // import StoriqaIcon from '../../components/Icons';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 
-
-// const RightButton = () => [
-//   <TouchableOpacity key="person" onPress={Actions.register}>
-//     <StoriqaIcon name="person" size={20} color="#505050" />
-//   </TouchableOpacity>,
-//   <TouchableOpacity key="cart" onPress={Actions.pop}>
-//     <StoriqaIcon name="cart" size={20} color="#505050" />
-//   </TouchableOpacity>,
-// ];
-
-
-// const LoginQuery = graphql`
-//   query Login_version_Query($id: ID!) {
-//     viewer {
-//       user(id: $id) {
-//         id
-//         email
-//       }
-//     }
-//   }
-// `;
 
 const LoginQuery = graphql`
   query Login_version_Query {
@@ -111,53 +90,38 @@ class Login extends React.Component<{}, StateType> {
   }
 
   render() {
-    AsyncStorage.getItem('@Storiqa:token', (err, result) => {
-      console.log('---- Login token result: ', result);
-    });
     return (
-      <QueryRenderer
-        environment={relayEnvironment}
-        query={LoginQuery}
-        render={({ error, props }): Node => {
-          console.log('*** QueryRenderer error: ', error);
-          console.log('*** QueryRenderer props: ', props);
-          if (error) return <Text>Login screen error: {error}</Text>;
-          if (!props) return <Text>Loading...</Text>;
-          return (
-            <MainLayout
-              style={{
-                backgroundColor: '#fff',
-              }}
-            >
-              <View style={styles.wrapper}>
-                <StatusBar hidden />
-                <View style={styles.contentWrapper}>
-                  <View style={styles.content}>
-                    <Text style={{ fontSize: 25 }}>Login</Text>
-                    <View style={styles.formContainer}>
-                      <TextInput
-                        onChangeText={this.handleChangeEmail}
-                        placeholder="email"
-                        style={styles.textInput}
-                      />
-                      <TextInput
-                        onChangeText={this.handleChangePass}
-                        secureTextEntry
-                        placeholder="password"
-                        style={styles.textInput}
-                      />
-                      <Button onPress={this.handleLogin} title="Sign in" />
-                    </View>
-                  </View>
-                  <View style={styles.bottomContent}>
-                    <Button onPress={Actions.pop} title="Cancel" />
-                  </View>
-                </View>
-              </View>
-            </MainLayout>
-          );
+      <MainLayout
+        style={{
+          backgroundColor: '#fff',
         }}
-      />
+      >
+        <View style={styles.wrapper}>
+          <StatusBar hidden />
+          <View style={styles.contentWrapper}>
+            <View style={styles.content}>
+              <Text style={{ fontSize: 25 }}>Login</Text>
+              <View style={styles.formContainer}>
+                <TextInput
+                  onChangeText={this.handleChangeEmail}
+                  placeholder="email"
+                  style={styles.textInput}
+                />
+                <TextInput
+                  onChangeText={this.handleChangePass}
+                  secureTextEntry
+                  placeholder="password"
+                  style={styles.textInput}
+                />
+                <Button onPress={this.handleLogin} title="Sign in" />
+              </View>
+            </View>
+            <View style={styles.bottomContent}>
+              <Button onPress={Actions.pop} title="Cancel" />
+            </View>
+          </View>
+        </View>
+      </MainLayout>
     );
   }
 }
