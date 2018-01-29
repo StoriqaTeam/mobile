@@ -4,6 +4,9 @@
 - установите `react-native-cli` (`yarn global add react-native-cli`)
 
 - установите зависимости (`yarn`)
+- установите зависимости POD (`pod install`)
+
+запуск ios через файл проекта mobile.xcworkspace
 
 *Запуск iOS-версии*
 - react-native run-ios
