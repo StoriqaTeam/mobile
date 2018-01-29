@@ -1,26 +1,27 @@
 // @flow
 import React from 'react';
-import type { Node } from 'react';
-import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
+// import type { Node } from 'react';
+import { View, Text, TextInput, StatusBar, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { graphql, commitMutation, QueryRenderer } from 'react-relay';
+import { graphql, commitMutation } from 'react-relay';
 import styles from './styles';
 import relayEnvironment from '../../relay/relayEnvironment';
 // import StoriqaIcon from '../../components/Icons';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 
-const LoginQuery = graphql`
-  query Login_version_Query {
-    viewer {
-      currentUser {
-        id
-        email
-      }
-    }
-  }
-`;
+// const LoginQuery = graphql`
+//   query Login_version_Query {
+//     viewer {
+//       currentUser {
+//         id
+//         email
+//       }
+//     }
+//   }
+// `;
 
 const mutation = graphql`
   mutation Login_version_Mutation($email: String!, $password: String!) {
@@ -89,6 +90,29 @@ class Login extends React.Component<{}, StateType> {
     );
   }
 
+  handleLoginManager = () => {
+    LoginManager.logInWithReadPermissions(['public_profile'])
+      .then((result) => {
+        if (result.isCancelled) {
+          console.log('FB result is canceled');
+        } else {
+          console.log('Login Success permission granted: ', result.grantedPermissions);
+          AccessToken.getCurrentAccessToken().then((data) => {
+            if (data) {
+              const { accessToken } = data;
+              console.log('FB access token: ', accessToken);
+            }
+          });
+        }
+      }, (error) => {
+        console.log('FB error: ', error);
+      });
+  }
+
+  handleLogout = () => {
+    LoginManager.logOut();
+  }
+
   render() {
     return (
       <MainLayout
@@ -113,7 +137,8 @@ class Login extends React.Component<{}, StateType> {
                   placeholder="password"
                   style={styles.textInput}
                 />
-                <Button onPress={this.handleLogin} title="Sign in" />
+                <Button onPress={this.handleLoginManager} title="Sign in with facebook" primary />
+                <Button onPress={this.handleLogout} title="Logout with facebook" secondary />
               </View>
             </View>
             <View style={styles.bottomContent}>
