@@ -22,6 +22,8 @@
 
 - Native module cannot be null. (нельзя импортировать RN как `import * as RN from 'react-native'`)
 
+- `route 'list' should declare a screen` - непонятная проблема, решилась откатом проекта на билд без POD, сборкой и возвратом, после этого, на последний коммит. По пути чистил node_modules.
+
 ### Добавление кастомных шрифтов:
 
 - сгенерировать новый шрифт с помощью http://fontello.com/ для этого можно взять текущий config.json в src/font
