@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.googleusercontent.apps.581310517186-3cci7s1th6q21ntjolh8a6rhmbfook3k</string>
+			<string>com.googleusercontent.apps.135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.581310517186-3cci7s1th6q21ntjolh8a6rhmbfook3k</string>
+				<string>com.googleusercontent.apps.135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5</string>
 			</array>
 		</dict>
 		<dict>
@@ -53,12 +53,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>211089046117156</string>
 	<key>FacebookDisplayName</key>
 	<string>storiqa</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

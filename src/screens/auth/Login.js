@@ -10,6 +10,7 @@ import relayEnvironment from '../../relay/relayEnvironment';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 
 
 // const LoginQuery = graphql`
@@ -90,7 +91,7 @@ class Login extends React.Component<{}, StateType> {
     );
   }
 
-  handleLoginManager = () => {
+  handleFacebookAuth = () => {
     LoginManager.logInWithReadPermissions(['public_profile'])
       .then((result) => {
         if (result.isCancelled) {
@@ -111,6 +112,25 @@ class Login extends React.Component<{}, StateType> {
 
   handleLogout = () => {
     LoginManager.logOut();
+  }
+
+  handleGoogleAuth = () => {
+    GoogleSignin.configure({
+      iosClientId: '135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5.apps.googleusercontent.com', // only for iOS
+    }).then(() => {
+      // you can now call currentUserAsync()
+      console.log('handleGoogleAuth configured');
+      GoogleSignin.signIn()
+        .then((user) => {
+          console.log('google dign in user: ', user);
+          // user.accessToken - use this
+          // this.setState({user: user});
+        })
+        .catch((err) => {
+          console.log('WRONG SIGNIN', err);
+        })
+        .done();
+    });
   }
 
   render() {
@@ -139,6 +159,7 @@ class Login extends React.Component<{}, StateType> {
                 />
                 <Button onPress={this.handleLoginManager} title="Sign in with facebook" primary />
                 <Button onPress={this.handleLogout} title="Logout with facebook" secondary />
+                <Button onPress={this.handleGoogleAuth} title="Sign in with google" primary />
               </View>
             </View>
             <View style={styles.bottomContent}>
