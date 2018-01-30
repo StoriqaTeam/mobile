@@ -10,7 +10,7 @@ import relayEnvironment from '../../relay/relayEnvironment';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 
 // const LoginQuery = graphql`
@@ -115,21 +115,32 @@ class Login extends React.Component<{}, StateType> {
   }
 
   handleGoogleAuth = () => {
-    GoogleSignin.configure({
-      iosClientId: '135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5.apps.googleusercontent.com', // only for iOS
-    }).then(() => {
-      // you can now call currentUserAsync()
-      console.log('handleGoogleAuth configured');
-      GoogleSignin.signIn()
-        .then((user) => {
-          console.log('google dign in user: ', user);
-          // user.accessToken - use this
-          // this.setState({user: user});
-        })
-        .catch((err) => {
-          console.log('WRONG SIGNIN', err);
-        })
-        .done();
+    GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
+      // play services are available. can now configure library
+      console.log('Play services exist');
+      GoogleSignin.configure({
+        iosClientId: '135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5.apps.googleusercontent.com', // only for iOS
+        webClientId: '135326128929-8pfv06doro1n447uc05giv8su8csgurv.apps.googleusercontent.com',
+        // project_id: 'storiqa-193711',
+        // auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+        // token_uri: 'https://accounts.google.com/o/oauth2/token',
+        // auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+      }).then(() => {
+        // you can now call currentUserAsync()
+        console.log('handleGoogleAuth configured');
+        GoogleSignin.signIn()
+          .then((user) => {
+            console.log('google dign in user: ', user);
+            // user.accessToken - use this
+            // this.setState({user: user});
+          })
+          .catch((err) => {
+            console.log('WRONG SIGNIN', err);
+          })
+          .done();
+      });
+    }).catch((err) => {
+      console.log('Play services error', err.code, err.message);
     });
   }
 
