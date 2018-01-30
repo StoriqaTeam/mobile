@@ -46,13 +46,17 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>211089046117156</string>
+			<string>fb211089046117156</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>211089046117156</string>
+				<string>fb211089046117156</string>
 			</array>
 		</dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>211089046117156</string>
+	<key>FacebookDisplayName</key>
+	<string>storiqa</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
