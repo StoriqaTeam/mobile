@@ -2,6 +2,7 @@ package com.mobile;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
