@@ -120,7 +120,7 @@ class Login extends React.Component<{}, StateType> {
       console.log('Play services exist');
       GoogleSignin.configure({
         iosClientId: '135326128929-equlsuq2cj8jgvffqoqh77bu5a9qerg5.apps.googleusercontent.com', // only for iOS
-        webClientId: '135326128929-8pfv06doro1n447uc05giv8su8csgurv.apps.googleusercontent.com',
+        // webClientId: '135326128929-8pfv06doro1n447uc05giv8su8csgurv.apps.googleusercontent.com',
         // project_id: 'storiqa-193711',
         // auth_uri: 'https://accounts.google.com/o/oauth2/auth',
         // token_uri: 'https://accounts.google.com/o/oauth2/token',
