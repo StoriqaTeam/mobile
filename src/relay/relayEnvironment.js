@@ -1,9 +1,13 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
+
+const host = Platform.OS === 'ios' ? 'http://localhost:8000' : 'http://98ea9a9b.ngrok.io';
+const url = `${host}/graphql`;
+
 
 function fetchQuery(operation, variables) {
   return AsyncStorage.getItem('@Storiqa:token').then((token) => {
-    const fetchVar = fetch('http://localhost:8000/graphql', { // eslint-disable-line
+    const fetchVar = fetch(url, { // eslint-disable-line
       method: 'POST',
       headers: {
         'content-type': 'application/json',

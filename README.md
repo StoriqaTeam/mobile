@@ -24,6 +24,8 @@
 
 - `route 'list' should declare a screen` - непонятная проблема, решилась откатом проекта на билд без POD, сборкой и возвратом, после этого, на последний коммит. По пути чистил node_modules.
 
+- android не может слушать сервер на localhost поэтому портируем его (ngrok) и правим host в src/relay/relayEnvironment.js
+
 ### Добавление кастомных шрифтов:
 
 - сгенерировать новый шрифт с помощью http://fontello.com/ для этого можно взять текущий config.json в src/font

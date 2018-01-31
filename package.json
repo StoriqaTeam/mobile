@@ -12,6 +12,7 @@
   "dependencies": {
     "graphql": "^0.12.3",
     "prop-types": "^15.6.0",
+    "ramda": "^0.25.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-fbsdk": "^0.7.0",
