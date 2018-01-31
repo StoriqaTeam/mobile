@@ -9,25 +9,29 @@ import styles from './styles';
 
 type ButtonProps = {
   text: string,
-  primary?: boolean,
-  secondary?: boolean,
+  type: 'primary' | 'secondary',
   onPress: () => void,
 }
 
 
 const Button = ({
   text,
-  primary,
-  secondary,
+  type = 'primary',
   onPress,
 }: ButtonProps) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[styles.button, primary && styles.primaryBG, secondary && styles.secondaryBG]}>
+    <View
+      style={[
+        styles.button,
+        type === 'primary' && styles.primaryBG,
+        type === 'secondary' && styles.secondaryBG,
+      ]}
+    >
       <Text
         style={[
           styles.buttonText,
-          primary && styles.primaryColor,
-          secondary && styles.secondaryColor,
+          type === 'primary' && styles.primaryColor,
+          type === 'secondary' && styles.secondaryColor,
         ]}
       >
         {text}
@@ -35,6 +39,5 @@ const Button = ({
     </View>
   </TouchableOpacity>
 );
-// Button.defau
 
 export default Button;

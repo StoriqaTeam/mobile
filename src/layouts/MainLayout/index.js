@@ -10,7 +10,7 @@ import type { NavbarType } from '../../components/Navbar';
 
 
 type LayoutType = {
-  navbar: NavbarType | void,
+  navbar: ?NavbarType,
   children: Element<any>,
 }
 
