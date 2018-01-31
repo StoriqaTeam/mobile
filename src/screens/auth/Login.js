@@ -1,28 +1,17 @@
 // @flow
+
 import React from 'react';
-// import type { Node } from 'react';
 import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { graphql, commitMutation } from 'react-relay';
-import styles from './styles';
-import relayEnvironment from '../../relay/relayEnvironment';
-// import StoriqaIcon from '../../components/Icons';
-import Button from '../../components/Buttons';
-import MainLayout from '../../layouts/MainLayout';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
+import styles from './styles';
+import relayEnvironment from '../../relay/relayEnvironment';
+import Button from '../../components/Buttons';
+import MainLayout from '../../layouts/MainLayout';
+import { GetJWTByProviderMutation } from '../../relay/mutations';
 
-
-// const LoginQuery = graphql`
-//   query Login_version_Query {
-//     viewer {
-//       currentUser {
-//         id
-//         email
-//       }
-//     }
-//   }
-// `;
 
 const mutation = graphql`
   mutation Login_version_Mutation($email: String!, $password: String!) {
@@ -92,16 +81,33 @@ class Login extends React.Component<{}, StateType> {
   }
 
   handleFacebookAuth = () => {
-    LoginManager.logInWithReadPermissions(['public_profile'])
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
       .then((result) => {
         if (result.isCancelled) {
           console.log('FB result is canceled');
         } else {
-          console.log('Login Success permission granted: ', result.grantedPermissions);
           AccessToken.getCurrentAccessToken().then((data) => {
+            // getting user token from backend server
             if (data) {
               const { accessToken } = data;
-              console.log('FB access token: ', accessToken);
+              const mutationParams = {
+                provider: 'FACEBOOK',
+                token: accessToken,
+                environment: relayEnvironment,
+                onCompleted: (response: ?Object) => {
+                  if (!!response && !!response.getJWTByProvider) {
+                    const { getJWTByProvider: { token } } = response;
+                    AsyncStorage.setItem('@Storiqa:token', token);
+                    Actions.root();
+                  }
+                },
+                onError: (error: Error) => {
+                  console.log('*** Login handleFacebookAuth error: ', error);
+                },
+              };
+
+              console.log('FB mutation params: ', mutationParams);
+              GetJWTByProviderMutation(mutationParams);
             }
           });
         }
