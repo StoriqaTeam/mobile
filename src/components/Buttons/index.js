@@ -10,35 +10,39 @@ import styles from './styles';
 
 type ButtonProps = {
   title: string,
-  primary?: boolean,
-  secondary?: boolean,
-  leftButton?: Node,
-  rightButton?: Node,
+  type: 'primary' | 'secondary',
+  leftIcon?: Node,
+  rightIcon?: Node,
   onPress: () => void,
 }
 
 
 export default ({
   title,
-  primary,
-  secondary,
-  leftButton,
-  rightButton,
+  type = 'primary',
+  leftIcon,
+  rightIcon,
   onPress,
 }: ButtonProps) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[styles.button, primary && styles.primaryBG, secondary && styles.secondaryBG]}>
-      {leftButton && leftButton}
+    <View
+      style={[
+        styles.button,
+        type === 'primary' && styles.primaryBG,
+        type === 'secondary' && styles.secondaryBG,
+      ]}
+    >
+      {!!leftIcon && leftIcon}
       <Text
         style={[
           styles.buttonText,
-          primary && styles.primaryColor,
-          secondary && styles.secondaryColor,
+          type === 'primary' && styles.primaryColor,
+          type === 'secondary' && styles.secondaryColor,
         ]}
       >
         {title}
       </Text>
-      {rightButton && rightButton}
+      {rightIcon && rightIcon}
     </View>
   </TouchableOpacity>
 );
@@ -46,31 +50,30 @@ export default ({
 
 export const HeaderButton = ({
   title,
-  primary,
-  secondary,
-  leftButton,
-  rightButton,
+  type = 'primary',
+  leftIcon,
+  rightIcon,
   onPress,
 }: ButtonProps) => (
   <TouchableOpacity onPress={onPress}>
     <View
       style={[
         styles.headerButton,
-        primary && styles.primaryBG,
-        secondary && styles.secondaryBG,
+        type === 'primary' && styles.primaryBG,
+        type === 'secondary' && styles.secondaryBG,
       ]}
     >
-      {leftButton && leftButton}
+      {!!leftIcon && leftIcon}
       <Text
         style={[
           styles.buttonText,
-          primary && styles.primaryColor,
-          secondary && styles.secondaryColor,
+          type === 'primary' && styles.primaryColor,
+          type === 'secondary' && styles.secondaryColor,
         ]}
       >
         {title}
       </Text>
-      {rightButton && rightButton}
+      {!!rightIcon && rightIcon}
     </View>
   </TouchableOpacity>
 );
