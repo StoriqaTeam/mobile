@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 // import type { Node } from 'react';
-import { View, Text, TextInput, StatusBar, AsyncStorage, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { graphql, commitMutation } from 'react-relay';
 import styles from './styles';
@@ -10,7 +10,7 @@ import relayEnvironment from '../../relay/relayEnvironment';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 
 
 // const LoginQuery = graphql`
@@ -168,9 +168,9 @@ class Login extends React.Component<{}, StateType> {
                   placeholder="password"
                   style={styles.textInput}
                 />
-                <Button onPress={this.handleLoginManager} title="Sign in with facebook" primary />
-                <Button onPress={this.handleLogout} title="Logout with facebook" secondary />
-                <Button onPress={this.handleGoogleAuth} title="Sign in with google" primary />
+                <Button onPress={this.handleFacebookAuth} title="Sign in with facebook" />
+                {/* <Button onPress={this.handleLogout} title="Logout with facebook" type="secondary" /> */}
+                <Button onPress={this.handleGoogleAuth} title="Sign in with google" />
               </View>
             </View>
             <View style={styles.bottomContent}>

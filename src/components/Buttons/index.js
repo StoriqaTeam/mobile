@@ -10,7 +10,7 @@ import styles from './styles';
 
 type ButtonProps = {
   title: string,
-  type: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary',
   leftIcon?: Node,
   rightIcon?: Node,
   onPress: () => void,
