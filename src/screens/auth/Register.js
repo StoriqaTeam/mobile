@@ -10,6 +10,8 @@ import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import { CreateUserByEmailMutation } from '../../relay/mutations';
 import utils from '../../utils';
+import ProviderButton from './ProviderButton';
+import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
 
 type StateType = {
@@ -84,6 +86,8 @@ export default class Register extends React.Component<{}, StateType> {
                   style={styles.textInput}
                 />
                 <Button onPress={this.handleRegister} title="Sign up" />
+                <ProviderButton provider={GOOGLE_PROVIDER} title="Sign up with google" />
+                <ProviderButton provider={FACEBOOK_PROVIDER} title="Sign up with facebook" />
               </View>
             </View>
             <View style={styles.bottomContent}>
