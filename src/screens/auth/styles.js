@@ -5,11 +5,9 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     paddingTop: 20,
-    // flexDirection: 'column',
   },
   contentWrapper: {
     flex: 1,
-    // backgroundColor: '#333',
   },
   content: {
     flex: 1,
@@ -22,7 +20,6 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'center',
-    // alignItems: 'center',
     padding: 20,
   },
   textInput: {
