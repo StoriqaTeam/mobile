@@ -1,23 +1,16 @@
+// @flow
+
 import React from 'react';
-import { AsyncStorage, View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { graphql, commitMutation } from 'react-relay';
+import { pathOr } from 'ramda';
 import MainLayout from '../../layouts/MainLayout';
 import Button from '../../components/Buttons';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
+import { CreateUserByEmailMutation } from '../../relay/mutations';
+import utils from '../../utils';
 
-
-const mutation = graphql`
-  mutation Register_version_Mutation($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
-      id
-    }
-    getJWTByEmail(email: $email, password: $password) {
-      token
-    }
-  }
-`;
 
 type StateType = {
   email: string,
@@ -34,14 +27,12 @@ export default class Register extends React.Component<{}, StateType> {
   }
 
   handleChangeEmail = (email: string) => {
-    console.log('** email: ', email);
     this.setState({
       email,
     });
   }
 
   handleChangePass = (password: string) => {
-    console.log('** pass: ', password);
     this.setState({
       password,
     });
@@ -53,30 +44,19 @@ export default class Register extends React.Component<{}, StateType> {
       email,
       password,
     };
-    commitMutation(
-      relayEnvironment,
-      {
-        mutation,
-        variables,
-        onCompleted: (response, errors) => {
-          if (!errors) {
-            // TODO: логирование
-            // console.log('*** Register.handleRegister onCompleted response: ', response);
-            const { getJWTByEmail: { token } } = response;
-            // пишем token в локальное хранилище
-            try {
-              AsyncStorage.setItem('@Storiqa:token', token);
-              Actions.pop();
-              Actions.pop();
-            } catch (err) {
-              // TODO: логирование
-              console.log('*** Register.handleRegister AsyncStorage error while set token: ', err);
-            }
-          }
-        },
-        onError: err => console.log('/// onError: ', err), // TODO: логирование
+    CreateUserByEmailMutation({
+      variables,
+      environment: relayEnvironment,
+      onCompleted: (response: ?Object) => {
+        // TODO: логирование
+        // console.log('*** Register.handleRegister onCompleted response: ', response);
+        const token = pathOr(null, ['getJWTByEmail', 'token'], response);
+        // пишем token в локальное хранилище
+        if (token) utils.setTokenToStorage(token);
+        Actions.root();
       },
-    );
+      onError: err => console.log('/// onError: ', err), // TODO: логирование
+    });
   }
 
   render() {

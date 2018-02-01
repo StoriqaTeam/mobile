@@ -4,8 +4,8 @@ import type { Environment } from 'relay-runtime';
 
 type MutationType = {
   variables: {
-    provider: 'FACEBOOK' | 'GOOGLE',
-    token: string,
+    email: string,
+    password: string,
   },
   environment: Environment,
   onCompleted: ?(response: ?Object, errors: ?Array<Error>) => void,
@@ -13,8 +13,11 @@ type MutationType = {
 }
 
 const mutation = graphql`
-  mutation GetJWTByProvider_version_Mutation($provider: Provider!, $token: String!) {
-    getJWTByProvider(provider: $provider, token: $token) {
+  mutation CreateUserByEmail_version_Mutation($email: String!, $password: String!) {
+    createUser(email: $email, password: $password) {
+      id
+    }
+    getJWTByEmail(email: $email, password: $password) {
       token
     }
   }
