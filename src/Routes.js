@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, AsyncStorage, StatusBar } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { Router, Modal, Tabs, Stack, Scene, Actions } from 'react-native-router-flux';
 import App from './App';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
+import * as profile from './screens/profile';
+// import ProfileScreen from './screens/profile/Profile';
 
 
 function handleCheckAuth() {
@@ -22,6 +24,7 @@ export default () => (
         <Stack key="root">
           <Scene key="list" initial component={stores.ListScreen} title="List Screen" />
           <Scene key="details" component={stores.DetailScreen} title="Details screen" />
+          <Scene key="profile" component={profile.ProfileScreen} title="Profile screen" />
         </Stack>
         <Stack key="payment">
           <Scene key="home" on={handleCheckAuth} component={App} title="" />

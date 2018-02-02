@@ -21,5 +21,8 @@ export default () => (
     <TouchableOpacity onPress={Actions.register}>
       <Text style={{ color: 'blue' }}>Register</Text>
     </TouchableOpacity>
+    <TouchableOpacity onPress={Actions.profile}>
+      <Text style={{ color: 'blue' }}>Profile</Text>
+    </TouchableOpacity>
   </View>
 );
