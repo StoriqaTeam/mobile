@@ -9,11 +9,10 @@ import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
-import { MutateUserFieldByName } from '../../relay/mutations';
+// import { UpdateUserMutation } from '../../relay/mutations';
 // import utils from '../../utils';
+import ProfileForm from './ProfileForm';
 
-const EMAIL_FIELD = 'email';
-const PHONE_FIELD = 'phone';
 
 type StateType = {
   editingFieldName: string,
@@ -23,34 +22,34 @@ type StateType = {
 export default class ProfileScreen extends React.Component<{}, StateType> {
   constructor() {
     super();
-    this.state = {
-      editingFieldName: '',
-      editingFieldValue: '',
-    };
+    // this.state = {
+    //   editingFieldName: '',
+    //   editingFieldValue: '',
+    // };
   }
 
-  handleSaveField = (name) => {
-    this.setState({
-      editingFieldName: '',
-    });
-    MutateUserFieldByName(name);
-  }
+  // handleSaveField = (name) => {
+  //   this.setState({
+  //     editingFieldName: '',
+  //   });
+  //   // MutateUserFieldByName(name);
+  // }
 
-  handleEditField = (editingFieldName) => {
-    this.setState({
-      editingFieldName,
-    });
-  }
+  // handleEditField = (editingFieldName) => {
+  //   this.setState({
+  //     editingFieldName,
+  //   });
+  // }
 
-  handleChangeFieldByName = (value) => {
-    this.setState({
-      editingFieldValue: value,
-    });
-  }
+  // handleChangeFieldByName = (value) => {
+  //   this.setState({
+  //     editingFieldValue: value,
+  //   });
+  // }
 
   render() {
-    const { editingFieldName } = this.state;
-    console.log('editing field: ', editingFieldName);
+    // const { editingFieldName } = this.state;
+    // console.log('editing field: ', editingFieldName);
     return (
       <QueryRenderer
         environment={relayEnvironment}
@@ -58,6 +57,7 @@ export default class ProfileScreen extends React.Component<{}, StateType> {
           query Profile_version_Query {
             viewer {
               currentUser {
+                id
                 email
                 phone
                 firstName
@@ -75,41 +75,17 @@ export default class ProfileScreen extends React.Component<{}, StateType> {
               backgroundColor: '#fff',
             }}
           >
-          {console.log('props: ', props)}
+          {console.log('**** props: ', props)}
             <View style={styles.wrapper}>
               <View style={styles.contentWrapper}>
                 <View style={styles.content}>
                   <Text style={{ fontSize: 25 }}>Profile</Text>
                   <View style={styles.formContainer}>
 
-                    <View>
-                      <TouchableOpacity
-                        onPress={() => this.handleEditField(EMAIL_FIELD)}
-                      >
-                        <Text>Edit</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => this.handleSaveField(EMAIL_FIELD)}
-                      >
-                        <Text>Save</Text>
-                      </TouchableOpacity>
-                      {editingFieldName === EMAIL_FIELD ?
-                        <TextInput
-                          onChangeText={text => this.handleChangeFieldByName(text)}
-                          placeholder="email"
-                          style={styles.textInput}
-                        />
-                        :
-                        <View
-                          style={{
-                            height: 50,
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <Text style={{ fontSize: 16 }}>{props && props.viewer.currentUser.email}</Text>
-                        </View>
-                      }
-                    </View>
+                    {(props && props.viewer) &&
+                      <ProfileForm data={props.viewer.currentUser} />
+                    }
+
 
                   </View>
                 </View>
