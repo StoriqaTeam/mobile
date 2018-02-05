@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { View, Text, TextInput, StatusBar } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import { pathOr } from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
-import Button from '../../components/Buttons';
+import Button, { HeaderButton } from '../../components/Buttons';
 import ProviderButton from './ProviderButton';
 import MainLayout from '../../layouts/MainLayout';
 import { GetJWTByEmailMutation } from '../../relay/mutations';
@@ -45,6 +45,11 @@ class Login extends React.Component<{}, StateType> {
     storeJWTByEmail({ email, password });
   }
 
+  handleLogout = () => {
+    utils.removeTokenFromStorage();
+    Actions.root();
+  }
+
   render() {
     return (
       <MainLayout
@@ -75,6 +80,7 @@ class Login extends React.Component<{}, StateType> {
               </View>
             </View>
             <View style={styles.bottomContent}>
+              <Button onPress={this.handleLogout} title="Logout" />
               <Button onPress={Actions.pop} title="Cancel" />
             </View>
           </View>
@@ -91,7 +97,7 @@ function storeJWTByEmail(variables) {
     onCompleted: (response: ?Object) => {
       const userToken = pathOr(null, ['getJWTByEmail', 'token'], response);
       utils.setTokenToStorage(userToken);
-      Actions.root();
+      Actions.reset('root');
     },
     onError: (error: Error) => {
       console.log('*** getting user token error: ', error);

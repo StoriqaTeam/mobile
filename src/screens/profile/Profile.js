@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { QueryRenderer, graphql } from 'react-relay';
 import { Actions } from 'react-native-router-flux';
 // import { pathOr } from 'ramda';
@@ -15,17 +15,19 @@ import ProfileForm from './ProfileForm';
 
 
 type StateType = {
-  editingFieldName: string,
-  editingFieldValue: string,
+  refresh: boolean,
 }
 
 export default class ProfileScreen extends React.Component<{}, StateType> {
   constructor() {
     super();
-    // this.state = {
-    //   editingFieldName: '',
-    //   editingFieldValue: '',
-    // };
+    this.state = {
+      refresh: false,
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('*** Profile componentWillReceiveProps newProps: ', newProps);
   }
 
   // handleSaveField = (name) => {
@@ -49,7 +51,7 @@ export default class ProfileScreen extends React.Component<{}, StateType> {
 
   render() {
     // const { editingFieldName } = this.state;
-    // console.log('editing field: ', editingFieldName);
+    console.log('*** Profile render()');
     return (
       <QueryRenderer
         environment={relayEnvironment}
@@ -75,7 +77,7 @@ export default class ProfileScreen extends React.Component<{}, StateType> {
               backgroundColor: '#fff',
             }}
           >
-          {console.log('**** props: ', props)}
+          {console.log('**** Profile props: ', props)}
             <View style={styles.wrapper}>
               <View style={styles.contentWrapper}>
                 <View style={styles.content}>

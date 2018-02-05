@@ -8,6 +8,15 @@ function setTokenToStorage(token) {
   }
 }
 
+function removeTokenFromStorage() {
+  try {
+    AsyncStorage.removeItem('@Storiqa:token');
+  } catch (error) {
+    console.log('- utils removeTokenFromStorage error: ', error);
+  }
+}
+
 export default {
   setTokenToStorage,
+  removeTokenFromStorage,
 };
