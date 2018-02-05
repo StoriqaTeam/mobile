@@ -6,7 +6,7 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { pathOr } from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
-import Button from '../../components/Buttons';
+import Button, { HeaderButton } from '../../components/Buttons';
 import ProviderButton from './ProviderButton';
 import MainLayout from '../../layouts/MainLayout';
 import { GetJWTByEmailMutation } from '../../relay/mutations';

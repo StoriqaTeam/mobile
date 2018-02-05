@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+// import { HeaderButton } from '../../../components/Buttons';
+import StoriqaIcon from '../../../components/Icons';
 
 
-export default () => (
+const List = () => (
   <View>
     <Text style={{ fontSize: 25 }}>Stores List</Text>
     <TouchableOpacity onPress={Actions.details}>
@@ -21,3 +23,15 @@ export default () => (
     </TouchableOpacity>
   </View>
 );
+
+List.navigationOptions = () => ({
+  headerRight: <StoriqaIcon
+    name="person"
+    size={20}
+    color="#505050"
+    onPress={Actions.profile}
+    style={{ marginRight: 8 }}
+  />,
+});
+
+export default List;
