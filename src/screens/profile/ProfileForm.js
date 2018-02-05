@@ -1,16 +1,11 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { QueryRenderer, graphql } from 'react-relay';
-// import { Actions } from 'react-native-router-flux';
-// import { pathOr } from 'ramda';
+import { View, Text, TextInput } from 'react-native';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
-// import MainLayout from '../../layouts/MainLayout';
 import { UpdateUserMutation } from '../../relay/mutations';
-// import utils from '../../utils';
 import { MALE, FEMALE, UNDEFINED } from '../../constants';
 
 type FormPropsType = {
@@ -45,11 +40,10 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     super(props);
     this.state = {
       data: props.data,
-    }
+    };
   }
 
   handleChangeTextField = (fieldName: string, value: ?string) => {
-    console.log('**** handleChangeTextField fieldName, value: ', fieldName, value);
     this.setState({
       data: {
         ...this.state.data,
@@ -61,34 +55,18 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   handleSaveForm = () => {
     const { data } = this.state;
     if (data) {
-      // const {
-      //   id, email, phone, firstName, lastName, middleName, gender, birthdate,
-      // } = data;
-      // UpdateUserMutation(id, email, phone, firstName, lastName, middleName, gender, birthdate);
-      // UpdateUserMutation(Object.keys(data).map(key => data[key]));
       UpdateUserMutation({
         variables: {
           ...data,
         },
         environment: relayEnvironment,
-        onCompleted: (response: ?Object) => {
-          console.log('*** Update user on complete: ', response);
-          // const userToken = pathOr(null, ['getJWTByEmail', 'token'], response);
-          // utils.setTokenToStorage(userToken);
-          // Actions.root();
-        },
-        onError: (error: Error) => {
-          console.log('*** getting user token error: ', error);
-        },
       });
     }
   }
 
   render() {
     if (!this.props || !this.props.data) return null;
-    // const { data } = this.props;
     const { data } = this.state;
-    console.log('**** ProfileForm state: ', data);
     return (
       <View>
 
@@ -99,7 +77,10 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         <View>
           <TextInput
             onChangeText={text => this.handleChangeTextField('phone', text)}
-            placeholder="phone"
+            keyboardType="phone-pad"
+            returnKeyType="done"
+            value={data.phone}
+            placeholder="Phone"
             style={styles.textInput}
           />
         </View>
@@ -107,7 +88,8 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         <View>
           <TextInput
             onChangeText={text => this.handleChangeTextField('firstName', text)}
-            placeholder="firstName"
+            value={data.firstName}
+            placeholder="First Name"
             style={styles.textInput}
           />
         </View>
@@ -115,7 +97,8 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         <View>
           <TextInput
             onChangeText={text => this.handleChangeTextField('lastName', text)}
-            placeholder="lastName"
+            value={data.lastName}
+            placeholder="Last name"
             style={styles.textInput}
           />
         </View>
@@ -123,18 +106,12 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         <View>
           <TextInput
             onChangeText={text => this.handleChangeTextField('middleName', text)}
-            placeholder="middleName"
+            value={data.middleName}
+            placeholder="Middle name"
             style={styles.textInput}
           />
         </View>
 
-        {/* <View>
-          <TextInput
-            onChangeText={text => this.handleChangeTextField('gender', text)}
-            placeholder="middleName"
-            style={styles.textInput}
-          />
-        </View> */}
         <Button onPress={this.handleSaveForm} title="save form" />
 
       </View>
