@@ -14,6 +14,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: gray,
     paddingHorizontal: 10,
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
   },
   headerButton: {
     height: 37,

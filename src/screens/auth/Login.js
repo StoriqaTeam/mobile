@@ -55,10 +55,6 @@ class Login extends React.Component<{}, StateType> {
   render() {
     return (
       <MainLayout
-        style={{
-          // backgroundColor: '#fff',
-          // backgroundImage: 'url(../../img/login_bg.png)',
-        }}
         backgroundURL={LOGIN_BG_X}
       >
         <View style={styles.wrapper}>
