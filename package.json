@@ -7,13 +7,16 @@
     "test": "jest",
     "relay": "yarn updateSchema && relay-compiler --src ./src --schema ./data/schema.json --watch",
     "updateSchema": "BABEL_ENV=development NODE_ENV=development babel-node scripts/updateSchema.js",
-    "flow": "./node_modules/.bin/flow ./src"
+    "flow": "./node_modules/.bin/flow check ./src"
   },
   "dependencies": {
     "graphql": "^0.12.3",
     "prop-types": "^15.6.0",
+    "ramda": "^0.25.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-fbsdk": "^0.7.0",
+    "react-native-google-signin": "^0.12.0",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-vector-icons": "^4.5.0",
     "react-relay": "^1.4.1",

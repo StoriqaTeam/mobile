@@ -5,8 +5,11 @@ import {
 
 export default StyleSheet.create({
   wrapper: {
-    paddingTop: 20,
+    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#ffffff',
+  },
+  statusBarIndent: {
+    marginTop: 20,
   },
 });

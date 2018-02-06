@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import type { Node } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -8,15 +9,19 @@ import {
 import styles from './styles';
 
 type ButtonProps = {
-  text: string,
-  type: 'primary' | 'secondary',
+  title: string,
+  type?: 'primary' | 'secondary',
+  leftIcon?: Node,
+  rightIcon?: Node,
   onPress: () => void,
 }
 
 
-const Button = ({
-  text,
+export default ({
+  title,
   type = 'primary',
+  leftIcon,
+  rightIcon,
   onPress,
 }: ButtonProps) => (
   <TouchableOpacity onPress={onPress}>
@@ -27,6 +32,7 @@ const Button = ({
         type === 'secondary' && styles.secondaryBG,
       ]}
     >
+      {!!leftIcon && leftIcon}
       <Text
         style={[
           styles.buttonText,
@@ -34,10 +40,40 @@ const Button = ({
           type === 'secondary' && styles.secondaryColor,
         ]}
       >
-        {text}
+        {title}
       </Text>
+      {rightIcon && rightIcon}
     </View>
   </TouchableOpacity>
 );
 
-export default Button;
+
+export const HeaderButton = ({
+  title,
+  type = 'primary',
+  leftIcon,
+  rightIcon,
+  onPress,
+}: ButtonProps) => (
+  <TouchableOpacity onPress={onPress}>
+    <View
+      style={[
+        styles.headerButton,
+        type === 'primary' && styles.primaryBG,
+        type === 'secondary' && styles.secondaryBG,
+      ]}
+    >
+      {!!leftIcon && leftIcon}
+      <Text
+        style={[
+          styles.buttonText,
+          type === 'primary' && styles.primaryColor,
+          type === 'secondary' && styles.secondaryColor,
+        ]}
+      >
+        {title}
+      </Text>
+      {!!rightIcon && rightIcon}
+    </View>
+  </TouchableOpacity>
+);

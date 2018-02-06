@@ -8,8 +8,18 @@ const secondary = 'black';
 
 export default StyleSheet.create({
   button: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: gray,
-    padding: 20,
+    paddingHorizontal: 10,
+  },
+  headerButton: {
+    height: 37,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   primaryBG: {
     backgroundColor: primary,

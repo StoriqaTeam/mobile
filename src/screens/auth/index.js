@@ -1,8 +1,8 @@
-import LoginScreen from './Login';
-import RegisterScreen from './Register';
+import Login from './Login';
+import Register from './Register';
 
 
 export {
-  LoginScreen,
-  RegisterScreen,
+  Login,
+  Register,
 };
