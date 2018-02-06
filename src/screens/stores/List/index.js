@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 // import { HeaderButton } from '../../../components/Buttons';
-import StoriqaIcon from '../../../components/Icons';
+import { StoriqaIcon } from '../../../components/Icons';
 
 
 const List = () => (

@@ -15,14 +15,21 @@ import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 type PropsType = {
   title: string,
   provider: string,
-  type?: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary' | 'default',
+  style?: { [key: string]: any },
 }
 
-export default ({ title, provider, type = 'primary' }: PropsType) => (
+export default ({
+  title,
+  provider,
+  type,
+  style,
+}: PropsType) => (
   <Button
     title={title}
     onPress={provider === GOOGLE_PROVIDER ? handleGoogleAuth : handleFacebookAuth}
     type={type}
+    style={style}
   />
 );
 
@@ -33,6 +40,7 @@ function storeJWTByProvider(variables) {
     environment: relayEnvironment,
     onCompleted: (response: ?Object) => {
       const userToken = pathOr(null, ['getJWTByProvider', 'token'], response);
+      console.log('*** getting user token: ', userToken);
       utils.setTokenToStorage(userToken);
       Actions.root();
     },

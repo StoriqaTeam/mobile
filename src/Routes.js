@@ -27,19 +27,10 @@ export default () => (
           <Scene key="details" component={stores.DetailScreen} title="Details screen" />
           <Scene key="profile" on={handleCheckAuth} component={profile.ProfileScreen} title="Profile screen" />
         </Stack>
-        <Tabs
-          swipeEnabled
-          animationEnabled
-          hideNavBar
-          tabBarPosition="top"
-          tabStyle={{ backgroundColor: '#fff' }}
-          labelStyle={{ color: '#000' }}
-          tabBarStyle={{ backgroundColor: '#fff' }}
-          activeTintColor="#2fbafd"
-        >
-          <Scene key="login" component={auth.Login} title="Login" hideNavBar />
+        <Stack key="auth">
+          <Scene key="login" initial component={auth.Login} title="Login" hideNavBar />
           <Scene key="register" component={auth.Register} title="Register" hideNavBar />
-        </Tabs>
+        </Stack>
       </Modal>
     </Router>
   </View>

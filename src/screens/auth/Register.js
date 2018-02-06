@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { pathOr } from 'ramda';
 import MainLayout from '../../layouts/MainLayout';
@@ -88,6 +88,9 @@ export default class Register extends React.Component<{}, StateType> {
                 <Button onPress={this.handleRegister} title="Sign up" />
                 <ProviderButton provider={GOOGLE_PROVIDER} title="Sign up with google" />
                 <ProviderButton provider={FACEBOOK_PROVIDER} title="Sign up with facebook" />
+                <TouchableOpacity onPress={Actions.login}>
+                  <Text>Already have an account? Login</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.bottomContent}>

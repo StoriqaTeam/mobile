@@ -21,6 +21,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  defaultBG: {
+    backgroundColor: white,
+  },
   primaryBG: {
     backgroundColor: primary,
   },

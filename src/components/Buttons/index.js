@@ -10,26 +10,30 @@ import styles from './styles';
 
 type ButtonProps = {
   title: string,
-  type?: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary' | 'default',
   leftIcon?: Node,
   rightIcon?: Node,
   onPress: () => void,
+  style?: { [ key: string ]: any },
 }
 
 
 export default ({
   title,
-  type = 'primary',
+  type = 'default',
   leftIcon,
   rightIcon,
   onPress,
+  style,
 }: ButtonProps) => (
   <TouchableOpacity onPress={onPress}>
     <View
       style={[
         styles.button,
+        type === 'default' && styles.defaultBG,
         type === 'primary' && styles.primaryBG,
         type === 'secondary' && styles.secondaryBG,
+        style && style,
       ]}
     >
       {!!leftIcon && leftIcon}
