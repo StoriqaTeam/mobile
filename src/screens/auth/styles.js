@@ -32,7 +32,7 @@ export default StyleSheet.create({
     borderRadius: 4,
     shadowColor: '#333',
     shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 16,
     marginTop: 10,
     marginBottom: 50,
@@ -40,11 +40,31 @@ export default StyleSheet.create({
   textInput: {
     width: '100%',
     height: 50,
-    backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 20,
     fontSize: 18,
-    marginBottom: 5,
+  },
+  signinButton: {
+    shadowColor: '#333',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    borderRadius: 4,
+  },
+  providersWrapper: {
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  centerTextWrapper: {
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  separator: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#333',
+    opacity: 0.1,
   },
 });
 

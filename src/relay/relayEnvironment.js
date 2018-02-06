@@ -7,6 +7,7 @@ const url = `${host}/graphql`;
 
 function fetchQuery(operation, variables) {
   return AsyncStorage.getItem('@Storiqa:token').then((token) => {
+    console.log('*** token: ', token);
     const fetchVar = fetch(url, { // eslint-disable-line
       method: 'POST',
       headers: {
@@ -19,6 +20,7 @@ function fetchQuery(operation, variables) {
         variables,
       }),
     }).then(response => response.json());
+    fetchVar.then(result => console.log('*** fetch result: ', result));
     return fetchVar;
   });
 }

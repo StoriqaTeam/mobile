@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import type { Node } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import { pathOr } from 'ramda';
@@ -17,6 +18,8 @@ type PropsType = {
   provider: string,
   type?: 'primary' | 'secondary' | 'default',
   style?: { [key: string]: any },
+  leftIcon?: Node,
+  rightIcon?: Node,
 }
 
 export default ({
@@ -24,12 +27,16 @@ export default ({
   provider,
   type,
   style,
+  leftIcon,
+  rightIcon,
 }: PropsType) => (
   <Button
     title={title}
     onPress={provider === GOOGLE_PROVIDER ? handleGoogleAuth : handleFacebookAuth}
     type={type}
     style={style}
+    leftIcon={leftIcon}
+    rightIcon={rightIcon}
   />
 );
 

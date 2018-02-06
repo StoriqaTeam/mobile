@@ -9,6 +9,7 @@ const secondary = 'black';
 export default StyleSheet.create({
   button: {
     height: 50,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: gray,
@@ -38,5 +39,6 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: black,
+    marginHorizontal: 8,
   },
 });

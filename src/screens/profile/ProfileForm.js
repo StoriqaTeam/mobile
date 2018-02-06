@@ -66,6 +66,7 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
 
   render() {
     if (!this.props || !this.props.data) return null;
+    console.log('*** Profile is load');
     const { data } = this.state;
     return (
       <View>

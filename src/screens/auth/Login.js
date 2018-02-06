@@ -1,15 +1,14 @@
 // @flow
 
 import React from 'react';
-import { Image, View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { pathOr } from 'ramda';
-import SvgUri from 'react-native-svg-uri';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
-import { LOGIN_BG, LOGIN_BG_X } from '../../components/Image';
-import { StoriqaIcon, GOOGLE_SVG } from '../../components/Icons';
+import { LOGIN_BG_X } from '../../components/Image';
+import { SVGIcon, GOOGLE_SVG, FACEBOOK_SVG } from '../../components/Icons';
 import ProviderButton from './ProviderButton';
 import MainLayout from '../../layouts/MainLayout';
 import { GetJWTByEmailMutation } from '../../relay/mutations';
@@ -68,31 +67,30 @@ class Login extends React.Component<{}, StateType> {
             onPress={Actions.pop}
             style={{ flexDirection: 'row' }}
           >
-            <SvgUri
-              width="200"
-              height="200"
-              source={require('../../svg/google-icon.svg')}
-            />
             {/* <StoriqaIcon name="person" style={{ marginRight: 15 }} /> */}
             <Text>Cancel</Text>
           </TouchableOpacity>
           <View style={styles.headerWrapper}>
-            <Text style={styles.title}>Sign In</Text>
+            <Text style={styles.title}> Sign In</Text>
             <Text style={styles.subTitle}>Sign in with your email or provider.</Text>
           </View>
           <View style={styles.formWrapper}>
-            <View style={{ height: 50, flexDirection: 'row', justifyContent: 'space-between' }}>
-              {/* <SVGIcon name={GOOGLE_SVG} /> */}
+            <View style={styles.providersWrapper}>
               <ProviderButton
                 provider={GOOGLE_PROVIDER}
-                title="Sign in with google"
-                style={{ paddingHorizontal: 16 }}
+                title="with google"
+                leftIcon={<SVGIcon name={GOOGLE_SVG} />}
+                style={{ paddingHorizontal: 16, backgroundColor: 'transparent' }}
               />
               <ProviderButton
                 provider={FACEBOOK_PROVIDER}
-                title="Sign in with facebook"
-                style={{ paddingHorizontal: 16 }}
+                title="with facebook"
+                leftIcon={<SVGIcon name={FACEBOOK_SVG} />}
+                style={{ paddingHorizontal: 16, backgroundColor: 'transparent' }}
               />
+            </View>
+            <View style={{ height: 50, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ color: '#333', fontSize: 20 }}>OR</Text>
             </View>
             <View style={styles.formFields}>
               <TextInput
@@ -100,7 +98,7 @@ class Login extends React.Component<{}, StateType> {
                 placeholder="Email"
                 style={styles.textInput}
               />
-              <View style={{ width: '100%', height: 1, backgroundColor: '#333', opacity: 0.1 }} />
+              <View style={styles.separator} />
               <TextInput
                 onChangeText={this.handleChangePass}
                 secureTextEntry
@@ -108,14 +106,12 @@ class Login extends React.Component<{}, StateType> {
                 style={styles.textInput}
               />
             </View>
-            <Button onPress={this.handleEmailAuth} title="Sign in with email" />
-            <TouchableOpacity onPress={Actions.register}>
-              <Text>Have not an account? Register</Text>
-            </TouchableOpacity>
           </View>
           <View style={styles.footerWrapper}>
-            <Button onPress={this.handleLogout} title="Logout" />
-            <Button onPress={Actions.pop} title="Cancel" />
+            <Button onPress={this.handleEmailAuth} title="Sign in with email" style={styles.signinButton} />
+            <TouchableOpacity onPress={Actions.register} style={styles.centerTextWrapper}>
+              <Text>Create Account</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </MainLayout>
