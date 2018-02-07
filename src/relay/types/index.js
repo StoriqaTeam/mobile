@@ -3,7 +3,7 @@ import { MALE, FEMALE, UNDEFINED } from '../../constants';
 
 export type UserType = {
   id: string,
-  email: string,
+  email: ?string,
   phone: ?string,
   firstName: ?string,
   lastName: ?string,

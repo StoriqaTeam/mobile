@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
-import { removeTokenFromStorage } from '../../utils';
 import ProfileForm from './ProfileForm';
 import { UserType } from './ProfileContainer';
 
@@ -36,19 +35,6 @@ const Profile = ({ user }: UserType) => {
   }
   return null;
 };
-
-Profile.navigationOptions = () => ({
-  headerRight: (
-    <TouchableOpacity onPress={logout}>
-      <Text>Logout</Text>
-    </TouchableOpacity>
-  ),
-});
-
-function logout() {
-  removeTokenFromStorage();
-  Actions.root();
-}
 
 
 export default Profile;

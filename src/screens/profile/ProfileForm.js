@@ -49,10 +49,14 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   handleSaveForm = () => {
     console.log('*** handleSaveForm');
     const { user } = this.state;
+    const userEmailExcluded = R.dissoc('email', user);
     if (user) {
       UpdateUserMutation({
         variables: {
-          ...user,
+          input: {
+            clientMutationId: '',
+            ...userEmailExcluded,
+          },
         },
         environment: relayEnvironment,
       });
