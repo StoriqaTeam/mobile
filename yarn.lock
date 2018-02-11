@@ -4716,6 +4716,10 @@ react-native-tab-view@^0.0.70:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-text-input-mask@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-0.5.2.tgz#6e38f818c20e1f63cdb8eec951371d59fe01abd0"
+
 react-native-vector-icons@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"
