@@ -7,6 +7,8 @@ import styles from './styles';
 import Button from '../../components/Buttons';
 import { UpdateUserMutation } from '../../relay/mutations';
 import { MALE, FEMALE, UNDEFINED } from '../../constants';
+import TextInputMask from 'react-native-text-input-mask';
+
 
 type FormPropsType = {
   data: ?{
@@ -76,8 +78,9 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         </View>
 
         <View>
-          <TextInput
-            onChangeText={text => this.handleChangeTextField('phone', text)}
+          <TextInputMask
+            onChangeText={(formated, extracted) => this.handleChangeTextField('phone', extracted)}
+            mask={"+[0] ([000]) [000] [00] [00]"}
             keyboardType="phone-pad"
             returnKeyType="done"
             value={data.phone}
