@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, DatePickerIOS } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import R from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
@@ -50,12 +50,16 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     console.log('*** handleSaveForm');
     const { user } = this.state;
     const userEmailExcluded = R.dissoc('email', user);
+    // const d = new Date();
+    // const n = d.toISOString();
+    // console.log('*** handleSaveForm phone: ', n);
     if (user) {
       UpdateUserMutation({
         variables: {
           input: {
             clientMutationId: '',
             ...userEmailExcluded,
+            // birthdate: n,
           },
         },
         environment: relayEnvironment,
@@ -130,6 +134,10 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
             placeholder="Middle name"
             style={styles.textInput}
           />
+        </View>
+
+        <View style={{}}>
+          <DatePickerIOS date={new Date()} onDateChange={value => console.log('*** date value: ', value)} />
         </View>
 
         <Button
