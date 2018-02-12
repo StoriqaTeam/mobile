@@ -16,18 +16,16 @@ const ProfileContainer = () => (
   <QueryRenderer
     environment={relayEnvironment}
     query={graphql`
-      query Profile_version_Query {
-        viewer {
-          currentUser {
-            id
-            email
-            phone
-            firstName
-            middleName
-            lastName
-            gender
-            birthdate
-          }
+      query ProfileContainer_version_Query {
+        me {
+          id
+          email
+          phone
+          firstName
+          middleName
+          lastName
+          gender
+          birthdate
         }
       }
     `}

@@ -45,8 +45,16 @@ export default class Register extends React.Component<{}, StateType> {
   handleRegister = () => {
     const { email, password } = this.state;
     const variables = {
-      email,
-      password,
+      inputCreateUser: {
+        clientMutationId: '',
+        email,
+        password,
+      },
+      inputJWTEmail: {
+        clientMutationId: '',
+        email,
+        password,
+      },
     };
     CreateUserByEmailMutation({
       variables,

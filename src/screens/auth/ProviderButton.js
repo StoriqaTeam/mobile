@@ -67,7 +67,12 @@ function handleGoogleAuth() {
       GoogleSignin.signIn()
         .then((data) => {
           const token = pathOr(null, ['accessToken'], data);
-          if (token) storeJWTByProvider({ provider: GOOGLE_PROVIDER, token });
+          const input = {
+            clientMutationId: '',
+            provider: GOOGLE_PROVIDER,
+            token,
+          };
+          if (token) storeJWTByProvider({ input });
         })
         .catch((err) => {
           console.log('WRONG SIGNIN', err);
@@ -88,7 +93,12 @@ function handleFacebookAuth() {
         AccessToken.getCurrentAccessToken().then((data) => {
           // getting user token from backend server
           const token = pathOr(null, ['accessToken'], data);
-          if (token) storeJWTByProvider({ provider: FACEBOOK_PROVIDER, token });
+          const input = {
+            clientMutationId: '',
+            provider: FACEBOOK_PROVIDER,
+            token,
+          };
+          if (token) storeJWTByProvider({ input });
         });
       }
     }, (error) => {

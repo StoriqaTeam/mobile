@@ -44,7 +44,12 @@ class Login extends React.Component<{}, StateType> {
 
   handleEmailAuth = () => {
     const { email, password } = this.state;
-    storeJWTByEmail({ email, password });
+    const input = {
+      clientMutationId: '',
+      email,
+      password,
+    };
+    storeJWTByEmail({ input });
   }
 
   handleLogout = () => {
