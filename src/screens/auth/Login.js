@@ -65,7 +65,7 @@ class Login extends React.Component<{}, StateType> {
         <View style={styles.wrapper}>
           <StatusBar hidden />
           <TouchableOpacity
-            onPress={Actions.pop}
+            onPress={Actions.root}
             style={{ flexDirection: 'row' }}
           >
             {/* <StoriqaIcon name="person" style={{ marginRight: 15 }} /> */}

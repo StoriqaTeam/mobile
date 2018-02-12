@@ -19,21 +19,22 @@ type FormPropsType = {
 
 type FormStateType = {
   user?: UserType,
-  validation: {
+  validation: ?{
     phone: ?boolean,
   },
 }
 
 
 export default class ProfileForm extends React.Component<FormPropsType, FormStateType> {
-  constructor(props) {
+  constructor(props: FormPropsType) {
     super(props);
     this.state = {
       user: props.user,
+      validation: null,
     };
   }
 
-  handleChangeTextField = (fieldName: string, value: ?string, validation?: (str: string) => boolean) => {
+  handleChangeTextField = (fieldName: string, value: string, validation?: (str: string) => boolean) => {
     this.setState({
       user: {
         ...this.state.user,
@@ -83,7 +84,8 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   render() {
     if (!this.props || !this.props.user) return null;
     const { user, validation } = this.state;
-    console.log('*** validation: ', validation);
+    if (!user) return null;
+    // console.log('*** validation: ', validation);
     return (
       <View>
 
@@ -106,7 +108,7 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
           errorMessage="Fail"
           okMessage="Ok"
           disabled={!validation || !('phone' in validation)}
-          isValid={validation && validation.phone}
+          isValid={!!validation && !!validation.phone}
         />
 
         <View style={styles.textInputWrapper}>

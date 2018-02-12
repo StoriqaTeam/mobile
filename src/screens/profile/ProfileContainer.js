@@ -10,7 +10,9 @@ import { removeTokenFromStorage } from '../../utils';
 
 
 type ProfilePropsType = {
-  me?: UserType,
+  props: {
+    me?: UserType,
+  },
 }
 
 const ProfileContainer = () => (
@@ -30,8 +32,8 @@ const ProfileContainer = () => (
         }
       }
     `}
-    render={({ props }: ProfilePropsType) => {
-      if (props) return <Profile user={props.me} />;
+    render={(data: ProfilePropsType) => {
+      if (data.props) return <Profile user={data.props.me} />;
       return null;
     }}
   />

@@ -6,7 +6,7 @@ import styles from './styles';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 import ProfileForm from './ProfileForm';
-import { UserType } from './ProfileContainer';
+import { UserType } from '../../relay/types';
 
 
 const Profile = ({ user }: UserType) => {
