@@ -45,4 +45,8 @@ export default StyleSheet.create({
     color: black,
     marginHorizontal: 8,
   },
+  disabled: {
+    borderWidth: 1,
+    borderColor: 'red',
+  },
 });

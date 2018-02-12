@@ -1,4 +1,4 @@
-import ProfileScreen from './Profile';
+import ProfileScreen from './ProfileContainer';
 
 
 export {

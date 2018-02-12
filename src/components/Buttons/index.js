@@ -15,6 +15,7 @@ type ButtonProps = {
   rightIcon?: Node,
   onPress: () => void,
   style?: { [ key: string ]: any },
+  disabled?: boolean,
 }
 
 
@@ -25,14 +26,16 @@ export default ({
   rightIcon,
   onPress,
   style,
+  disabled = false,
 }: ButtonProps) => (
-  <TouchableOpacity onPress={onPress}>
+  <TouchableOpacity onPress={disabled ? () => {} : onPress}>
     <View
       style={[
         styles.button,
         type === 'default' && styles.defaultBG,
         type === 'primary' && styles.primaryBG,
         type === 'secondary' && styles.secondaryBG,
+        disabled && styles.disabled,
         style && style,
       ]}
     >
@@ -58,13 +61,16 @@ export const HeaderButton = ({
   leftIcon,
   rightIcon,
   onPress,
+  style,
+  disabled = false,
 }: ButtonProps) => (
-  <TouchableOpacity onPress={onPress}>
+  <TouchableOpacity onPress={disabled ? () => {} : onPress}>
     <View
       style={[
         styles.headerButton,
         type === 'primary' && styles.primaryBG,
         type === 'secondary' && styles.secondaryBG,
+        style && style,
       ]}
     >
       {!!leftIcon && leftIcon}

@@ -2,38 +2,26 @@
 
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
+import TextInputMask from 'react-native-text-input-mask';
+import R from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
 import { UpdateUserMutation } from '../../relay/mutations';
-import { MALE, FEMALE, UNDEFINED } from '../../constants';
-import TextInputMask from 'react-native-text-input-mask';
+import { phoneValidation } from '../../utils';
+import ValidatedField from '../../components/Fields';
+import { UserType } from '../../relay/types';
 
 
 type FormPropsType = {
-  data: ?{
-    id: string,
-    email: string,
-    phone: ?string,
-    firstName: ?string,
-    lastName: ?string,
-    middleName: ?string,
-    gender: ?MALE | ?FEMALE | ?UNDEFINED,
-    birthdate: ?string,
-  }
+  user?: UserType,
 }
 
 type FormStateType = {
-  data: ?{
-    id: string,
-    email: string,
-    phone: ?string,
-    firstName: ?string,
-    lastName: ?string,
-    middleName: ?string,
-    gender: ?MALE | ?FEMALE | ?UNDEFINED,
-    birthdate: ?string,
-  }
+  user?: UserType,
+  validation: {
+    phone: ?boolean,
+  },
 }
 
 
@@ -41,82 +29,110 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data,
+      user: props.user,
     };
   }
 
-  handleChangeTextField = (fieldName: string, value: ?string) => {
+  handleChangeTextField = (fieldName: string, value: ?string, validation?: (str: string) => boolean) => {
     this.setState({
-      data: {
-        ...this.state.data,
+      user: {
+        ...this.state.user,
         [fieldName]: value,
+      },
+      validation: {
+        ...this.state.validation,
+        [fieldName]: validation ? validation(value) : true,
       },
     });
   }
 
   handleSaveForm = () => {
-    const { data } = this.state;
-    if (data) {
+    console.log('*** handleSaveForm');
+    const { user } = this.state;
+    if (user) {
       UpdateUserMutation({
         variables: {
-          ...data,
+          ...user,
         },
         environment: relayEnvironment,
       });
     }
   }
 
+  handleCheckValidation = () => {
+    const { validation } = this.state;
+    // проверяем validation объект на false значения ключей
+    if (validation) {
+      return Object.keys(validation)
+        .filter(key => !validation[key])
+        .length === 0;
+    }
+    return false;
+  }
+
+  handleCheckChanges = () => R.equals(this.state.user, this.props.user);
+
   render() {
-    if (!this.props || !this.props.data) return null;
-    console.log('*** Profile is load');
-    const { data } = this.state;
+    if (!this.props || !this.props.user) return null;
+    const { user, validation } = this.state;
+    console.log('*** validation: ', validation);
     return (
       <View>
 
         <View>
-          <Text>{data.email}</Text>
+          <Text>{user.email}</Text>
         </View>
 
-        <View>
-          <TextInputMask
-            onChangeText={(formated, extracted) => this.handleChangeTextField('phone', extracted)}
-            mask={"+[0] ([000]) [000] [00] [00]"}
-            keyboardType="phone-pad"
-            returnKeyType="done"
-            value={data.phone}
-            placeholder="Phone"
-            style={styles.textInput}
-          />
-        </View>
+        <ValidatedField
+          component={
+            <TextInputMask
+              onChangeText={(formated, extracted) => this.handleChangeTextField('phone', extracted, phoneValidation)}
+              mask={"+[0] ([000]) [000] [00] [00]"}
+              keyboardType="phone-pad"
+              returnKeyType="done"
+              value={user.phone}
+              placeholder="Phone"
+              style={styles.textInput}
+            />
+          }
+          errorMessage="Fail"
+          okMessage="Ok"
+          disabled={!validation || !('phone' in validation)}
+          isValid={validation && validation.phone}
+        />
 
-        <View>
+        <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('firstName', text)}
-            value={data.firstName}
+            value={user.firstName}
             placeholder="First Name"
             style={styles.textInput}
           />
         </View>
 
-        <View>
+        <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('lastName', text)}
-            value={data.lastName}
+            value={user.lastName}
             placeholder="Last name"
             style={styles.textInput}
           />
         </View>
 
-        <View>
+        <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('middleName', text)}
-            value={data.middleName}
+            value={user.middleName}
             placeholder="Middle name"
             style={styles.textInput}
           />
         </View>
 
-        <Button onPress={this.handleSaveForm} title="save form" />
+        <Button
+          onPress={this.handleSaveForm}
+          disabled={this.handleCheckChanges() || !this.handleCheckValidation()}
+          title="save form"
+        />
 
       </View>
     );

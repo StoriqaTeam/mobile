@@ -1,37 +1,18 @@
 // @flow
-
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { QueryRenderer, graphql } from 'react-relay';
 import { Actions } from 'react-native-router-flux';
-import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
-import utils from '../../utils';
+import { removeTokenFromStorage } from '../../utils';
 import ProfileForm from './ProfileForm';
+import { UserType } from './ProfileContainer';
 
 
-const Profile = () => (
-  <QueryRenderer
-    environment={relayEnvironment}
-    query={graphql`
-      query Profile_version_Query {
-        viewer {
-          currentUser {
-            id
-            email
-            phone
-            firstName
-            middleName
-            lastName
-            gender
-            birthdate
-          }
-        }
-      }
-    `}
-    render={({ props }) => (
+const Profile = ({ user }: UserType) => {
+  if (user) {
+    return (
       <MainLayout
         style={{
           backgroundColor: '#fff',
@@ -42,7 +23,7 @@ const Profile = () => (
             <View style={styles.content}>
               <Text style={{ fontSize: 25 }}>Profile</Text>
               <View style={styles.formContainer}>
-                {(props && props.viewer) && <ProfileForm data={props.viewer.currentUser} />}
+                <ProfileForm user={user} />
               </View>
             </View>
             <View style={styles.bottomContent}>
@@ -51,9 +32,10 @@ const Profile = () => (
           </View>
         </View>
       </MainLayout>
-    )}
-  />
-);
+    );
+  }
+  return null;
+};
 
 Profile.navigationOptions = () => ({
   headerRight: (
@@ -64,7 +46,7 @@ Profile.navigationOptions = () => ({
 });
 
 function logout() {
-  utils.removeTokenFromStorage();
+  removeTokenFromStorage();
   Actions.root();
 }
 

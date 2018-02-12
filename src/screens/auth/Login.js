@@ -12,7 +12,7 @@ import { SVGIcon, GOOGLE_SVG, FACEBOOK_SVG } from '../../components/Icons';
 import ProviderButton from './ProviderButton';
 import MainLayout from '../../layouts/MainLayout';
 import { GetJWTByEmailMutation } from '../../relay/mutations';
-import utils from '../../utils';
+import { removeTokenFromStorage, setTokenToStorage } from '../../utils';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
 
@@ -48,7 +48,7 @@ class Login extends React.Component<{}, StateType> {
   }
 
   handleLogout = () => {
-    utils.removeTokenFromStorage();
+    removeTokenFromStorage();
     Actions.root();
   }
 
@@ -121,7 +121,7 @@ function storeJWTByEmail(variables) {
     environment: relayEnvironment,
     onCompleted: (response: ?Object) => {
       const userToken = pathOr(null, ['getJWTByEmail', 'token'], response);
-      utils.setTokenToStorage(userToken);
+      setTokenToStorage(userToken);
       Actions.reset('root');
     },
     onError: (error: Error) => {

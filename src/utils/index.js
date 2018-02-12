@@ -27,7 +27,7 @@ function nameValidation(str: string): boolean {
 }
 
 function phoneValidation(str: string): boolean {
-  // return /^((\+[1-9]?[1-9])+\s+\(+(([0-9]){3})+\)+\s+([0-9]{3})+\s+([0-9]{2})+\s+([0-9]){2})$/.test(str);
+  console.log('*** phone validation: ', str);
   return /^([0-9]{11})$/.test(str);
 }
 

@@ -9,7 +9,7 @@ import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Buttons';
 import { GetJWTByProviderMutation } from '../../relay/mutations';
 import relayEnvironment from '../../relay/relayEnvironment';
-import utils from '../../utils';
+import { setTokenToStorage } from '../../utils';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
 
@@ -48,7 +48,7 @@ function storeJWTByProvider(variables) {
     onCompleted: (response: ?Object) => {
       const userToken = pathOr(null, ['getJWTByProvider', 'token'], response);
       console.log('*** getting user token: ', userToken);
-      utils.setTokenToStorage(userToken);
+      setTokenToStorage(userToken);
       Actions.root();
     },
     onError: (error: Error) => {

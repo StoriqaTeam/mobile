@@ -11,7 +11,7 @@ import styles from './styles';
 import { REGISTER_BG_X } from '../../components/Image';
 import { SVGIcon, GOOGLE_SVG, FACEBOOK_SVG } from '../../components/Icons';
 import { CreateUserByEmailMutation } from '../../relay/mutations';
-import utils from '../../utils';
+import { setTokenToStorage } from '../../utils';
 import ProviderButton from './ProviderButton';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
@@ -56,7 +56,7 @@ export default class Register extends React.Component<{}, StateType> {
         // console.log('*** Register.handleRegister onCompleted response: ', response);
         const token = pathOr(null, ['getJWTByEmail', 'token'], response);
         // пишем token в локальное хранилище
-        if (token) utils.setTokenToStorage(token);
+        if (token) setTokenToStorage(token);
         Actions.root();
       },
       onError: err => console.log('/// onError: ', err), // TODO: логирование

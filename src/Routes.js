@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, AsyncStorage } from 'react-native';
-import { Router, Modal, Tabs, Stack, Scene, Actions } from 'react-native-router-flux';
+import { Router, Modal, Stack, Scene, Actions } from 'react-native-router-flux';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
 import * as profile from './screens/profile';
