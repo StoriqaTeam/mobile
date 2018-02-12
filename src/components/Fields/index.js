@@ -8,7 +8,7 @@ import styles from './styles';
 
 type ValidatedFieldType = {
   component: Node,
-  disabled: boolean,
+  isChanged: boolean,
   isValid: boolean,
   errorMessage: string,
   okMessage: string,
@@ -16,14 +16,14 @@ type ValidatedFieldType = {
 
 export default ({
   component,
-  disabled,
+  isChanged,
   isValid,
   errorMessage,
   okMessage,
 }: ValidatedFieldType) => (
   <View style={styles.textInputWrapper}>
     {component}
-    {!disabled &&
+    {isChanged &&
       <View style={styles.validationStatusWrapper}>
         <Text>{isValid ? okMessage : errorMessage }</Text>
       </View>

@@ -14,26 +14,29 @@ import { UserType } from '../../relay/types';
 
 
 type FormPropsType = {
-  user?: UserType,
+  user: UserType,
 }
 
 type FormStateType = {
-  user?: UserType,
+  user: UserType,
   validation: {
-    phone: ?boolean,
+    phone: boolean,
   },
 }
 
 
 export default class ProfileForm extends React.Component<FormPropsType, FormStateType> {
-  constructor(props) {
+  constructor(props: FormPropsType) {
     super(props);
     this.state = {
       user: props.user,
+      validation: {
+        phone: false,
+      },
     };
   }
 
-  handleChangeTextField = (fieldName: string, value: ?string, validation?: (str: string) => boolean) => {
+  handleChangeTextField = (fieldName: string, value: string, validation?: (str: string) => boolean) => {
     this.setState({
       user: {
         ...this.state.user,
@@ -53,18 +56,16 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     // const d = new Date();
     // const n = d.toISOString();
     // console.log('*** handleSaveForm phone: ', n);
-    if (user) {
-      UpdateUserMutation({
-        variables: {
-          input: {
-            clientMutationId: '',
-            ...userEmailExcluded,
-            // birthdate: n,
-          },
+    UpdateUserMutation({
+      variables: {
+        input: {
+          clientMutationId: '',
+          ...userEmailExcluded,
+          // birthdate: n,
         },
-        environment: relayEnvironment,
-      });
-    }
+      },
+      environment: relayEnvironment,
+    });
   }
 
   handleCheckValidation = () => {
@@ -78,19 +79,14 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     return false;
   }
 
-  handleCheckChanges = () => R.equals(this.state.user, this.props.user);
-
   render() {
-    if (!this.props || !this.props.user) return null;
     const { user, validation } = this.state;
-    console.log('*** validation: ', validation);
+    const isFormChanged = !R.equals(user, this.props.user);
     return (
       <View>
-
         <View>
           <Text>{user.email}</Text>
         </View>
-
         <ValidatedField
           component={
             <TextInputMask
@@ -105,10 +101,9 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
           }
           errorMessage="Fail"
           okMessage="Ok"
-          disabled={!validation || !('phone' in validation)}
-          isValid={validation && validation.phone}
+          isChanged={user.phone !== this.props.user.phone}
+          isValid={!!validation && !!validation.phone}
         />
-
         <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('firstName', text)}
@@ -117,7 +112,6 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
             style={styles.textInput}
           />
         </View>
-
         <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('lastName', text)}
@@ -126,7 +120,6 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
             style={styles.textInput}
           />
         </View>
-
         <View style={styles.textInputWrapper}>
           <TextInput
             onChangeText={text => this.handleChangeTextField('middleName', text)}
@@ -135,17 +128,14 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
             style={styles.textInput}
           />
         </View>
-
         <View style={{}}>
           <DatePickerIOS date={new Date()} onDateChange={value => console.log('*** date value: ', value)} />
         </View>
-
         <Button
           onPress={this.handleSaveForm}
-          disabled={this.handleCheckChanges() || !this.handleCheckValidation()}
+          disabled={!isFormChanged || !this.handleCheckValidation()}
           title="save form"
         />
-
       </View>
     );
   }

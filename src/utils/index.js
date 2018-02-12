@@ -1,7 +1,7 @@
 // @flow
 import { AsyncStorage } from 'react-native';
 
-function setTokenToStorage(token) {
+function setTokenToStorage(token: string) {
   try {
     AsyncStorage.setItem('@Storiqa:token', token);
   } catch (error) {
