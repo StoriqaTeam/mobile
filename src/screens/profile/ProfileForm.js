@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, DatePickerIOS } from 'react-native';
+import { View, Text, TextInput, DatePickerIOS, Picker } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import R from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
@@ -11,7 +11,10 @@ import { UpdateUserMutation } from '../../relay/mutations';
 import { phoneValidation } from '../../utils';
 import ValidatedField from '../../components/Fields';
 import { UserType } from '../../relay/types';
+import { MALE, FEMALE, UNDEFINED } from '../../constants';
 
+
+const genderList = [MALE, FEMALE, UNDEFINED];
 
 type FormPropsType = {
   user: UserType,
@@ -79,9 +82,19 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     return false;
   }
 
+  handleChangeGender = (itemValue, itemIndex) => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        gender: itemValue,
+      },
+    });
+  }
+
   render() {
     const { user, validation } = this.state;
     const isFormChanged = !R.equals(user, this.props.user);
+    console.log('**** USER: ', user);
     return (
       <View>
         <View>
@@ -129,6 +142,16 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
           />
         </View>
         <View style={{}}>
+          <Text>Gender</Text>
+          <Picker
+            selectedValue={user.gender}
+            onValueChange={this.handleChangeGender}
+          >
+            {genderList.map((g, index) => <Picker.Item key={g} label={g} value={g} />)}
+          </Picker>
+        </View>
+        <View style={{}}>
+          <Text>Birth date</Text>
           <DatePickerIOS date={new Date()} onDateChange={value => console.log('*** date value: ', value)} />
         </View>
         <Button

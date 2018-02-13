@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import Button from '../../components/Buttons';
@@ -17,15 +17,12 @@ const Profile = ({ user }: UserType) => (
   >
     <View style={styles.wrapper}>
       <View style={styles.contentWrapper}>
-        <View style={styles.content}>
+        <ScrollView contentContainerStyle={styles.content}>
           <Text style={{ fontSize: 25 }}>Profile</Text>
           <View style={styles.formContainer}>
             <ProfileForm user={user} />
           </View>
-        </View>
-        <View style={styles.bottomContent}>
-          <Button onPress={Actions.pop} title="Cancel" />
-        </View>
+        </ScrollView>
       </View>
     </View>
   </MainLayout>

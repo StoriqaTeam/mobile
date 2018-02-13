@@ -4,14 +4,14 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    paddingTop: 20,
+    // paddingTop: 20,
   },
   contentWrapper: {
     flex: 1,
   },
   content: {
-    flex: 1,
-    alignItems: 'center',
+    // flex: 1,
+    // alignItems: 'center',
   },
   bottomContent: {
     backgroundColor: 'red',
