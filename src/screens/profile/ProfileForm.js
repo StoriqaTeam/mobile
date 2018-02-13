@@ -7,6 +7,7 @@ import R from 'ramda';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
+import DatePicker from '../../components/DatePicker';
 import { UpdateUserMutation } from '../../relay/mutations';
 import { phoneValidation } from '../../utils';
 import ValidatedField from '../../components/Fields';
@@ -53,18 +54,13 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   }
 
   handleSaveForm = () => {
-    console.log('*** handleSaveForm');
     const { user } = this.state;
     const userEmailExcluded = R.dissoc('email', user);
-    // const d = new Date();
-    // const n = d.toISOString();
-    // console.log('*** handleSaveForm phone: ', n);
     UpdateUserMutation({
       variables: {
         input: {
           clientMutationId: '',
           ...userEmailExcluded,
-          // birthdate: n,
         },
       },
       environment: relayEnvironment,
@@ -91,10 +87,18 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     });
   }
 
+  handleChangeDate = (value) => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        birthdate: value.toISOString(),
+      },
+    });
+  }
+
   render() {
     const { user, validation } = this.state;
     const isFormChanged = !R.equals(user, this.props.user);
-    console.log('**** USER: ', user);
     return (
       <View>
         <View>
@@ -152,7 +156,10 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
         </View>
         <View style={{}}>
           <Text>Birth date</Text>
-          <DatePickerIOS date={new Date()} onDateChange={value => console.log('*** date value: ', value)} />
+          <DatePicker
+            date={user.birthdate}
+            onChange={this.handleChangeDate}
+          />
         </View>
         <Button
           onPress={this.handleSaveForm}

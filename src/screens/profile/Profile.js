@@ -1,12 +1,11 @@
 // @flow
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import styles from './styles';
-import Button from '../../components/Buttons';
 import MainLayout from '../../layouts/MainLayout';
 import ProfileForm from './ProfileForm';
 import { UserType } from '../../relay/types';
+import Button from '../../components/Buttons';
 
 
 const Profile = ({ user }: UserType) => (
@@ -23,6 +22,9 @@ const Profile = ({ user }: UserType) => (
             <ProfileForm user={user} />
           </View>
         </ScrollView>
+        <View style={styles.bottomContent}>
+          <Button onPress={console.log} title="Save button" />
+        </View>
       </View>
     </View>
   </MainLayout>
