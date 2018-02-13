@@ -9,31 +9,33 @@ import Profile from './Profile';
 import { removeTokenFromStorage } from '../../utils';
 
 
-type ProfilePropsType = {
+type PropsType = {
   props: {
     me?: UserType,
   },
 }
 
+const query = graphql`
+  query ProfileContainer_version_Query {
+    me {
+      id
+      email
+      phone
+      firstName
+      middleName
+      lastName
+      gender
+      birthdate
+    }
+  }
+`;
+
 const ProfileContainer = () => (
   <QueryRenderer
     environment={relayEnvironment}
-    query={graphql`
-      query ProfileContainer_version_Query {
-        me {
-          id
-          email
-          phone
-          firstName
-          middleName
-          lastName
-          gender
-          birthdate
-        }
-      }
-    `}
-    render={(data: ProfilePropsType) => {
-      if (data.props) return <Profile user={data.props.me} />;
+    query={query}
+    render={(data: PropsType) => {
+      if (data.props && data.props.me) return <Profile user={data.props.me} />;
       return null;
     }}
   />

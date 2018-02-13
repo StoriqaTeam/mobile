@@ -23,7 +23,6 @@ export default StyleSheet.create({
     padding: 20,
   },
   textInput: {
-    // width: '90%',
     flex: 0.8,
     height: 50,
     backgroundColor: '#fff',
@@ -34,12 +33,8 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   textInputWrapper: {
-    // flex: 1,
     flexDirection: 'row',
   },
-  // textInputStatus: {
-  //   flex: 0.2,
-  // },
   validationStatusWrapper: {
     flex: 0.2,
     justifyContent: 'center',
