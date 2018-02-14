@@ -1,7 +1,9 @@
 // @flow
 import { AsyncStorage } from 'react-native';
+import R from 'ramda';
 
-function setTokenToStorage(token: string) {
+
+export function setTokenToStorage(token: string) {
   try {
     AsyncStorage.setItem('@Storiqa:token', token);
   } catch (error) {
@@ -9,7 +11,7 @@ function setTokenToStorage(token: string) {
   }
 }
 
-function removeTokenFromStorage() {
+export function removeTokenFromStorage() {
   try {
     AsyncStorage.removeItem('@Storiqa:token');
   } catch (error) {
@@ -17,24 +19,15 @@ function removeTokenFromStorage() {
   }
 }
 
-// validations
-function emailValidation(str: string): boolean {
-  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str);
-}
+// VALIDATION
+// Predicates
+export const isLengthEqual = (len: number) => (b: string) => R.length(b) === len;
+export const isNumber = (value: any) => /^\d+$/.test(value);
+export const isNotEmpty = (val: any) => {
+  return !!val ? val.length > 0 : false;
+};
 
-function nameValidation(str: string): boolean {
-  return /^[\p{L}'][ \p{L}'-]*[\p{L}]$/u.test(str);
-}
-
-function phoneValidation(str: string): boolean {
-  console.log('*** phone validation: ', str);
-  return /^([0-9]{11})$/.test(str);
-}
-
-export {
-  setTokenToStorage,
-  removeTokenFromStorage,
-  emailValidation,
-  nameValidation,
-  phoneValidation,
-}
+// Messages
+export const lengthMsg = (field: string, len: number) => `${field} length of ${len} is required`;
+export const emptyMsg = (field: string) => `${field} can not be empty`;
+export const numberOnlyMsg = (field: string) => `${field} should be a number`;

@@ -21,6 +21,7 @@ const query = graphql`
       id
       email
       phone
+      isActive
       firstName
       middleName
       lastName

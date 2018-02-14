@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, Picker } from 'react-native';
+import { Switch, View, Text, TextInput, Picker } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import R from 'ramda';
 import spected from 'spected';
@@ -10,23 +10,12 @@ import Button from '../../components/Buttons';
 import DatePicker from '../../components/DatePicker';
 import { UserType } from '../../relay/types';
 import { MALE, FEMALE, UNDEFINED } from '../../constants';
+import { isLengthEqual, isNumber, isNotEmpty, lengthMsg, emptyMsg, numberOnlyMsg } from '../../utils';
 
 
 const genderList = [MALE, FEMALE, UNDEFINED];
-// VALIDATION
-// Predicates
-const isLengthEqual = len => b => R.length(b) === len;
-const isNumber = str => /^\d+$/.test(str);
-const isNotEmpty = (val) => {
-  return !!val ? val.length > 0 : false;
-};
 
-// Messages
-const lengthMsg = (field, len) => `${field} length of ${len} is required`;
-const emptyMsg = field => `${field} can not be empty`;
-const numberOnlyMsg = field => `${field} should be a number`;
-
-// Rules
+// validation Rules
 const validationRules = {
   phone: [
     [isLengthEqual(11), lengthMsg('Phone', 11)],
@@ -109,6 +98,12 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
       <View>
         <View>
           <Text>{user.email}</Text>
+        </View>
+        <View style={styles.textInputWrapper}>
+          <Switch
+            onValueChange={value => this.handleChangeField('isActive', value)}
+            value={user.isActive}
+          />
         </View>
         <View style={styles.textInputWrapper}>
           <TextInputMask

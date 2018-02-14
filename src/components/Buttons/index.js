@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 
+
 type ActionType = () => Promise<any> | void;
-// type AsyncActionType = () => void;
 
 type ButtonProps = {
   title: string,

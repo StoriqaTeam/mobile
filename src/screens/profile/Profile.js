@@ -39,9 +39,6 @@ const Profile = ({ user }: UserType) => (
             <ProfileForm user={user} saveFormHandler={handleSaveForm} />
           </View>
         </ScrollView>
-        <View style={styles.bottomContent}>
-          <Button onPress={console.log} title="Save button" />
-        </View>
       </View>
     </View>
   </MainLayout>
