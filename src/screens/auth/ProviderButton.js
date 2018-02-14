@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import type { Node } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import { pathOr } from 'ramda';
@@ -8,21 +9,34 @@ import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Buttons';
 import { GetJWTByProviderMutation } from '../../relay/mutations';
 import relayEnvironment from '../../relay/relayEnvironment';
-import utils from '../../utils';
+import { setTokenToStorage } from '../../utils';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
 
 type PropsType = {
   title: string,
   provider: string,
-  type?: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary' | 'default',
+  style?: { [key: string]: any },
+  leftIcon?: Node,
+  rightIcon?: Node,
 }
 
-export default ({ title, provider, type = 'primary' }: PropsType) => (
+export default ({
+  title,
+  provider,
+  type,
+  style,
+  leftIcon,
+  rightIcon,
+}: PropsType) => (
   <Button
     title={title}
     onPress={provider === GOOGLE_PROVIDER ? handleGoogleAuth : handleFacebookAuth}
     type={type}
+    style={style}
+    leftIcon={leftIcon}
+    rightIcon={rightIcon}
   />
 );
 
@@ -33,7 +47,8 @@ function storeJWTByProvider(variables) {
     environment: relayEnvironment,
     onCompleted: (response: ?Object) => {
       const userToken = pathOr(null, ['getJWTByProvider', 'token'], response);
-      utils.setTokenToStorage(userToken);
+      console.log('*** getting user token: ', userToken);
+      setTokenToStorage(userToken);
       Actions.root();
     },
     onError: (error: Error) => {
@@ -52,7 +67,12 @@ function handleGoogleAuth() {
       GoogleSignin.signIn()
         .then((data) => {
           const token = pathOr(null, ['accessToken'], data);
-          if (token) storeJWTByProvider({ provider: GOOGLE_PROVIDER, token });
+          const input = {
+            clientMutationId: '',
+            provider: GOOGLE_PROVIDER,
+            token,
+          };
+          if (token) storeJWTByProvider({ input });
         })
         .catch((err) => {
           console.log('WRONG SIGNIN', err);
@@ -73,7 +93,12 @@ function handleFacebookAuth() {
         AccessToken.getCurrentAccessToken().then((data) => {
           // getting user token from backend server
           const token = pathOr(null, ['accessToken'], data);
-          if (token) storeJWTByProvider({ provider: FACEBOOK_PROVIDER, token });
+          const input = {
+            clientMutationId: '',
+            provider: FACEBOOK_PROVIDER,
+            token,
+          };
+          if (token) storeJWTByProvider({ input });
         });
       }
     }, (error) => {

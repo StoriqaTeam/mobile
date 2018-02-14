@@ -8,28 +8,38 @@ import {
 } from 'react-native';
 import styles from './styles';
 
+
+type ActionType = () => Promise<any> | void;
+
 type ButtonProps = {
   title: string,
-  type?: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary' | 'default',
   leftIcon?: Node,
   rightIcon?: Node,
-  onPress: () => void,
+  onPress: ActionType,
+  style?: { [ key: string ]: any },
+  disabled?: boolean,
 }
 
 
 export default ({
   title,
-  type = 'primary',
+  type = 'default',
   leftIcon,
   rightIcon,
   onPress,
+  style,
+  disabled = false,
 }: ButtonProps) => (
-  <TouchableOpacity onPress={onPress}>
+  <TouchableOpacity onPress={disabled ? () => {} : onPress}>
     <View
       style={[
         styles.button,
+        type === 'default' && styles.defaultBG,
         type === 'primary' && styles.primaryBG,
         type === 'secondary' && styles.secondaryBG,
+        disabled && styles.disabled,
+        style && style,
       ]}
     >
       {!!leftIcon && leftIcon}
@@ -54,13 +64,16 @@ export const HeaderButton = ({
   leftIcon,
   rightIcon,
   onPress,
+  style,
+  disabled = false,
 }: ButtonProps) => (
-  <TouchableOpacity onPress={onPress}>
+  <TouchableOpacity onPress={disabled ? () => {} : onPress}>
     <View
       style={[
         styles.headerButton,
         type === 'primary' && styles.primaryBG,
         type === 'secondary' && styles.secondaryBG,
+        style && style,
       ]}
     >
       {!!leftIcon && leftIcon}

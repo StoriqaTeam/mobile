@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, AsyncStorage, StatusBar } from 'react-native';
-import { Router, Modal, Tabs, Stack, Scene, Actions } from 'react-native-router-flux';
-import App from './App';
+import { View, AsyncStorage } from 'react-native';
+import { Router, Modal, Stack, Scene, Actions } from 'react-native-router-flux';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
+import * as profile from './screens/profile';
 
 
 function handleCheckAuth() {
+  console.log('*** Routes check token: ');
   AsyncStorage.getItem('@Storiqa:token').then((token) => {
+    console.log('*** Routes check token: ', token);
     if (!token) {
       Actions.login();
     }
@@ -22,23 +24,10 @@ export default () => (
         <Stack key="root">
           <Scene key="list" initial component={stores.ListScreen} title="List Screen" />
           <Scene key="details" component={stores.DetailScreen} title="Details screen" />
+          <Scene key="profile" on={handleCheckAuth} component={profile.ProfileScreen} title="Profile screen" />
         </Stack>
-        <Stack key="payment">
-          <Scene key="home" on={handleCheckAuth} component={App} title="" />
-        </Stack>
-        <Tabs
-          swipeEnabled
-          animationEnabled
-          hideNavBar
-          tabBarPosition="top"
-          tabStyle={{ backgroundColor: '#fff' }}
-          labelStyle={{ color: '#000' }}
-          tabBarStyle={{ backgroundColor: '#fff' }}
-          activeTintColor="#2fbafd"
-        >
-          <Scene key="login" component={auth.Login} title="Login" hideNavBar />
-          <Scene key="register" component={auth.Register} title="Register" hideNavBar />
-        </Tabs>
+        <Scene key="login" component={auth.Login} title="Login" hideNavBar />
+        <Scene key="register" component={auth.Register} title="Register" hideNavBar />
       </Modal>
     </Router>
   </View>
