@@ -1,31 +1,43 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TextInput, DatePickerIOS, Picker } from 'react-native';
+import { View, Text, TextInput, Picker } from 'react-native';
 import TextInputMask from 'react-native-text-input-mask';
 import R from 'ramda';
-import relayEnvironment from '../../relay/relayEnvironment';
+import spected from 'spected';
 import styles from './styles';
 import Button from '../../components/Buttons';
 import DatePicker from '../../components/DatePicker';
-import { UpdateUserMutation } from '../../relay/mutations';
-import { phoneValidation } from '../../utils';
-import ValidatedField from '../../components/Fields';
 import { UserType } from '../../relay/types';
 import { MALE, FEMALE, UNDEFINED } from '../../constants';
 
 
 const genderList = [MALE, FEMALE, UNDEFINED];
+// VALIDATION
+// Predicates
+const isLengthEqual = len => b => R.length(b) === len;
+const isNumber = str => /^\d+$/.test(str);
+
+// Messages
+const lengthMsg = (field, len) => `${field} length of ${len} is required`;
+const numberOnlyMsg = field => `${field} should be a number`;
+
+// Rules
+const validationRules = {
+  phone: [
+    [isLengthEqual(11), lengthMsg('Phone', 11)],
+    [isNumber, numberOnlyMsg('Phone')],
+  ],
+};
 
 type FormPropsType = {
   user: UserType,
+  saveFormHandler: (user: UserType) => void,
 }
 
 type FormStateType = {
   user: UserType,
-  validation: {
-    phone: boolean,
-  },
+  validation: any,
 }
 
 
@@ -34,136 +46,115 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     super(props);
     this.state = {
       user: props.user,
-      validation: {
-        phone: false,
-      },
+      validation: {},
     };
   }
 
-  handleChangeTextField = (fieldName: string, value: string, validation?: (str: string) => boolean) => {
-    this.setState({
-      user: {
-        ...this.state.user,
-        [fieldName]: value,
-      },
-      validation: {
-        ...this.state.validation,
-        [fieldName]: validation ? validation(value) : true,
-      },
-    });
-  }
-
-  handleSaveForm = () => {
-    const { user } = this.state;
-    const userEmailExcluded = R.dissoc('email', user);
-    UpdateUserMutation({
-      variables: {
-        input: {
-          clientMutationId: '',
-          ...userEmailExcluded,
-        },
-      },
-      environment: relayEnvironment,
-    });
-  }
-
-  handleCheckValidation = () => {
+  // проверяем validation объект на наличие полей с ошибками
+  isFormValid = () => {
     const { validation } = this.state;
-    // проверяем validation объект на false значения ключей
-    if (validation) {
-      return Object.keys(validation)
-        .filter(key => !validation[key])
-        .length === 0;
-    }
-    return false;
+    const pred = value => !!value.length;
+    const errorFields = R.filter(pred, validation);
+    const result = R.isEmpty(errorFields);
+    // console.log('*** isFormValid');
+    return result;
   }
 
-  handleChangeGender = (itemValue, itemIndex) => {
+  // проверяем изменились ли данные в форме
+  isFormChanged = () => !R.equals(this.state.user, this.props.user);
+
+  // Check volidation for all user object
+  handleValidateForm = (data) => {
+    const validation = spected(validationRules, data);
     this.setState({
-      user: {
-        ...this.state.user,
-        gender: itemValue,
-      },
+      validation,
     });
   }
 
-  handleChangeDate = (value) => {
-    this.setState({
-      user: {
-        ...this.state.user,
-        birthdate: value.toISOString(),
-      },
-    });
+  // Common method for update data
+  handleChangeField = (fieldName: string, value: any) => {
+    const user = {
+      ...this.state.user,
+      [fieldName]: value,
+    };
+    this.setState({ user });
+    this.handleValidateForm(user);
+  }
+
+  renderError = (fieldName) => {
+    const { validation } = this.state;
+    if (!validation[fieldName] || typeof validation[fieldName] === 'boolean') return null;
+    return validation[fieldName].map((err, index) => <View key={`err-${fieldName}-${index}`}><Text>{err}</Text></View>);
   }
 
   render() {
-    const { user, validation } = this.state;
-    const isFormChanged = !R.equals(user, this.props.user);
+    const { user } = this.state;
+    const { saveFormHandler } = this.props;
     return (
       <View>
         <View>
           <Text>{user.email}</Text>
         </View>
-        <ValidatedField
-          component={
-            <TextInputMask
-              onChangeText={(formated, extracted) => this.handleChangeTextField('phone', extracted, phoneValidation)}
-              mask={"+[0] ([000]) [000] [00] [00]"}
-              keyboardType="phone-pad"
-              returnKeyType="done"
-              value={user.phone}
-              placeholder="Phone"
-              style={styles.textInput}
-            />
-          }
-          errorMessage="Fail"
-          okMessage="Ok"
-          isChanged={user.phone !== this.props.user.phone}
-          isValid={!!validation && !!validation.phone}
-        />
+        <View style={styles.textInputWrapper}>
+          <TextInputMask
+            onChangeText={(_, extracted) => this.handleChangeField('phone', extracted)}
+            mask={"+[0] ([000]) [000] [00] [00]"}
+            keyboardType="phone-pad"
+            returnKeyType="done"
+            value={user.phone}
+            placeholder="Phone"
+            style={styles.textInput}
+          />
+          {this.renderError('phone')}
+        </View>
         <View style={styles.textInputWrapper}>
           <TextInput
-            onChangeText={text => this.handleChangeTextField('firstName', text)}
+            onChangeText={text => this.handleChangeField('firstName', text)}
             value={user.firstName}
             placeholder="First Name"
             style={styles.textInput}
           />
+          {this.renderError('firstName')}
         </View>
         <View style={styles.textInputWrapper}>
           <TextInput
-            onChangeText={text => this.handleChangeTextField('lastName', text)}
+            onChangeText={text => this.handleChangeField('lastName', text)}
             value={user.lastName}
             placeholder="Last name"
             style={styles.textInput}
           />
+          {this.renderError('lastName')}
         </View>
         <View style={styles.textInputWrapper}>
           <TextInput
-            onChangeText={text => this.handleChangeTextField('middleName', text)}
+            onChangeText={text => this.handleChangeField('middleName', text)}
             value={user.middleName}
             placeholder="Middle name"
             style={styles.textInput}
           />
+          {this.renderError('middleName')}
         </View>
         <View style={{}}>
           <Text>Gender</Text>
           <Picker
             selectedValue={user.gender}
-            onValueChange={this.handleChangeGender}
+            onValueChange={value => this.handleChangeField('gender', value)}
           >
             {genderList.map((g, index) => <Picker.Item key={g} label={g} value={g} />)}
           </Picker>
+          {this.renderError('gender')}
         </View>
         <View style={{}}>
           <Text>Birth date</Text>
           <DatePicker
             date={user.birthdate}
-            onChange={this.handleChangeDate}
+            onChange={date => this.handleChangeField('birthdate', date.toISOString())}
           />
+          {this.renderError('birthdate')}
         </View>
         <Button
-          onPress={this.handleSaveForm}
-          disabled={!isFormChanged || !this.handleCheckValidation()}
+          onPress={() => saveFormHandler(user)}
+          disabled={!this.isFormChanged() || !this.isFormValid()}
           title="save form"
         />
       </View>

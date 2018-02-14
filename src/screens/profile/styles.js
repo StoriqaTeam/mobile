@@ -23,7 +23,7 @@ export default StyleSheet.create({
     padding: 20,
   },
   textInput: {
-    flex: 0.8,
+    flex: 1,
     height: 50,
     backgroundColor: '#fff',
     borderWidth: 1,
@@ -33,10 +33,9 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   textInputWrapper: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   validationStatusWrapper: {
-    flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
   },
