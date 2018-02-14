@@ -78,7 +78,7 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   isFormChanged = () => !R.equals(this.state.user, this.props.user);
 
   // Check volidation for all user object
-  handleValidateForm = (data) => {
+  handleValidateForm = (data: UserType) => {
     const validation = spected(validationRules, data);
     this.setState({
       validation,
@@ -95,10 +95,11 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
     this.handleValidateForm(user);
   }
 
-  renderError = (fieldName) => {
+  renderError = (fieldName: string) => {
     const { validation } = this.state;
     if (!validation[fieldName] || typeof validation[fieldName] === 'boolean') return null;
-    return validation[fieldName].map((err, index) => <View key={`err-${fieldName}-${index}`}><Text style={{ color: 'red' }}>{err}</Text></View>);
+    return validation[fieldName]
+      .map((err, index) => <View key={`err-${fieldName}-${index}`}><Text style={{ color: 'red' }}>{err}</Text></View>);
   }
 
   render() {

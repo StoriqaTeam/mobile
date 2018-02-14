@@ -8,12 +8,15 @@ import {
 } from 'react-native';
 import styles from './styles';
 
+type ActionType = () => Promise<any> | void;
+// type AsyncActionType = () => void;
+
 type ButtonProps = {
   title: string,
   type?: 'primary' | 'secondary' | 'default',
   leftIcon?: Node,
   rightIcon?: Node,
-  onPress: () => void,
+  onPress: ActionType,
   style?: { [ key: string ]: any },
   disabled?: boolean,
 }

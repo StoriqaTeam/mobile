@@ -8,15 +8,16 @@ const maxDate = new Date();
 maxDate.setFullYear(maxDate.getFullYear() - 18);
 
 type PropType = {
-  date: ?string,
+  date: string,
   onChange: (val: Date) => void,
 }
 
 const DPIos = ({ date, onChange }: PropType) => {
+  const dateObj = new Date(date);
   return (
     <DatePickerIOS
       mode="date"
-      date={new Date(date)}
+      date={dateObj}
       onDateChange={onChange}
       maximumDate={maxDate}
     />
@@ -42,8 +43,8 @@ const DPAndroid = ({ date, onChange }: PropType) => {
           onChange(newDate);
         }
       }
-    } catch ({ code, message }) {
-      console.warn('Cannot open date picker', code, message);
+    } catch (err) {
+      console.warn('Cannot open date picker', err.code, err.message);
     }
   };
   return (
