@@ -31,6 +31,7 @@ const validationRules = {
   phone: [
     [isLengthEqual(11), lengthMsg('Phone', 11)],
     [isNumber, numberOnlyMsg('Phone')],
+    [isNotEmpty, emptyMsg('Phone')],
   ],
   firstName: [
     [isNotEmpty, emptyMsg('First Name')],
