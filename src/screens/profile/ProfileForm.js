@@ -17,9 +17,13 @@ const genderList = [MALE, FEMALE, UNDEFINED];
 // Predicates
 const isLengthEqual = len => b => R.length(b) === len;
 const isNumber = str => /^\d+$/.test(str);
+const isNotEmpty = (val) => {
+  return !!val ? val.length > 0 : false;
+};
 
 // Messages
 const lengthMsg = (field, len) => `${field} length of ${len} is required`;
+const emptyMsg = field => `${field} can not be empty`;
 const numberOnlyMsg = field => `${field} should be a number`;
 
 // Rules
@@ -27,6 +31,15 @@ const validationRules = {
   phone: [
     [isLengthEqual(11), lengthMsg('Phone', 11)],
     [isNumber, numberOnlyMsg('Phone')],
+  ],
+  firstName: [
+    [isNotEmpty, emptyMsg('First Name')],
+  ],
+  lastName: [
+    [isNotEmpty, emptyMsg('Last Name')],
+  ],
+  middleName: [
+    [isNotEmpty, emptyMsg('Middle Name')],
   ],
 };
 
@@ -84,7 +97,7 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
   renderError = (fieldName) => {
     const { validation } = this.state;
     if (!validation[fieldName] || typeof validation[fieldName] === 'boolean') return null;
-    return validation[fieldName].map((err, index) => <View key={`err-${fieldName}-${index}`}><Text>{err}</Text></View>);
+    return validation[fieldName].map((err, index) => <View key={`err-${fieldName}-${index}`}><Text style={{ color: 'red' }}>{err}</Text></View>);
   }
 
   render() {
