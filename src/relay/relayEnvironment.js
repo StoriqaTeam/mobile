@@ -1,7 +1,7 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import { AsyncStorage, Platform } from 'react-native';
 
-const host = Platform.OS === 'ios' ? 'http://localhost:8000' : 'http://acc22c3f.ngrok.io';
+const host = Platform.OS === 'ios' ? 'http://localhost:8000' : 'http://1307d2b9.ngrok.io';
 const url = `${host}/graphql`;
 
 
