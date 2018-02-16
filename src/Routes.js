@@ -22,8 +22,8 @@ export default () => (
     <Router>
       <Modal hideNavBar>
         <Stack key="root">
-          <Scene key="list" initial component={stores.ListScreen} title="List Screen" />
-          <Scene key="details" component={stores.DetailScreen} title="Details screen" />
+          <Scene key="stores" initial component={stores.StoresScreen} title="Stores Screen" />
+          <Scene key="store" component={stores.StoreScreen} title="Store screen" />
           <Scene key="profile" on={handleCheckAuth} component={profile.ProfileScreen} title="Profile screen" />
         </Stack>
         <Scene key="login" component={auth.Login} title="Login" hideNavBar />
