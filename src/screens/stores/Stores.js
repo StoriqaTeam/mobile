@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, Text } from 'react-native';
+import { ScrollView, Image, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import Button from '../../components/Buttons';
@@ -17,20 +17,26 @@ const Stores = ({ stores }: PropsType) => (
   <MainLayout
     backgroundURL={LOGIN_BG_X}
   >
-    <View style={styles.wrapper}>
-      {stores.map(store => (
-        <View key={store.id} style={styles.storeWrapper}>
-          <View style={styles.storeContentWrapper}>
-            <StatusIndicator state={store.isActive} />
-            <Text style={styles.storeTitle}>{store.name}</Text>
-            <Text style={styles.storeShortDescription}>{store.shortDescription}</Text>
-            <Image source={{ uri: store.cover }} style={{ width: 50, height: 50 }} />
-          </View>
-          <Button title="more..." onPress={() => Actions.store({ store })} />
-        </View>
-      ))}
-    </View>
+    <ScrollView style={styles.wrapper}>
+      {stores.map(store => (<StoreItem key={store.id} store={store} />))}
+    </ScrollView>
   </MainLayout>
+);
+
+type StorePropsType = {
+  store: StoreType,
+}
+
+const StoreItem = ({ store }: StorePropsType) => (
+  <View style={styles.storeWrapper}>
+    <View style={styles.storeContentWrapper}>
+      <StatusIndicator state={store.isActive} />
+      <Text style={styles.storeTitle}>{store.name}</Text>
+      <Text style={styles.storeShortDescription}>{store.shortDescription}</Text>
+      <Image source={{ uri: store.cover }} style={{ width: 50, height: 50 }} />
+    </View>
+    <Button title="more..." onPress={() => Actions.store({ store })} />
+  </View>
 );
 
 
