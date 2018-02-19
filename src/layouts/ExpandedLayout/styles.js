@@ -10,7 +10,7 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
   },
   statusBarIndent: {
     marginTop: 20,
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#03A9F4',
+    backgroundColor: '#ffffff',
     overflow: 'hidden',
   },
   bar: {
