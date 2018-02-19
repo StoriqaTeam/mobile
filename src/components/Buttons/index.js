@@ -60,7 +60,7 @@ export default ({
 
 export const HeaderButton = ({
   title,
-  type = 'primary',
+  type = 'default',
   leftIcon,
   rightIcon,
   onPress,

@@ -47,7 +47,8 @@ const StoresContainer = () => (
     query={query}
     render={(data: PropsType) => {
       const edges = R.pathOr(null, ['props', 'me', 'stores', 'edges'], data);
-      if (!edges) return null;
+      console.log('*** StoresContainer data: ', data);
+      if (!edges) return <Stores stores={[]} />;
       const stores = edges.map(obj => obj.node);
       return <Stores stores={stores} />;
     }}
