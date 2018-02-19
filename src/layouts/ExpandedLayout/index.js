@@ -12,7 +12,7 @@ import Navbar from '../../components/Navbar';
 import type { NavbarType } from '../../components/Navbar';
 
 
-const HEADER_MAX_HEIGHT = 120;
+const HEADER_MAX_HEIGHT = 100;
 const HEADER_MIN_HEIGHT = 80;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
@@ -44,6 +44,11 @@ export default class MainLayout extends React.Component<LayoutPropsType, LayoutS
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
       extrapolate: 'clamp',
     });
+    const fontSize = this.state.scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      outputRange: [30, 20],
+      extrapolate: 'clamp',
+    });
     return [
       <ScrollView
         key="scrollLayout"
@@ -62,7 +67,15 @@ export default class MainLayout extends React.Component<LayoutPropsType, LayoutS
         style={[styles.header, { height }]}
       >
         <View style={styles.bar}>
-          <Navbar {...navbar} />
+          <Navbar
+            {...navbar}
+            title={
+              <Animated.Text
+                style={{ fontSize }}
+              >{navbar.title}
+              </Animated.Text>
+            }
+          />
         </View>
       </Animated.View>,
     ];
