@@ -42,6 +42,7 @@ export default StyleSheet.create({
     color: white,
   },
   buttonText: {
+    // fontFamily: 'SF-Pro-Text-Light',
     color: black,
     marginHorizontal: 8,
   },

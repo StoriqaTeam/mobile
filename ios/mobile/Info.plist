@@ -73,9 +73,10 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Text-Light.otf</string>
 		<string>fontello.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
