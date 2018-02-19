@@ -23,17 +23,13 @@ const Navbar = ({
   rightButton,
 }: NavbarType) => {
   if (component) return component;
-  const titleEl = () => {
-    if (typeof title === 'string') return <Text>{title}</Text>;
-    return title;
-  };
   return (
     <View style={styles.navbarContainer}>
       <View style={styles.leftButtonContainer}>
         {!!leftButton && leftButton}
       </View>
       <View style={styles.titleContainer}>
-        {titleEl}
+        {typeof title === 'string' ? <Text style={styles.title}>{title}</Text> : title}
       </View>
       <View style={styles.rightButtonContainer}>
         {!!rightButton && rightButton}

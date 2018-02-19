@@ -1,9 +1,7 @@
 // @flow
 import type { Node, Element } from 'react';
 import React from 'react';
-import {
-  View,
-} from 'react-native';
+import { View } from 'react-native';
 import styles from './styles';
 import Image from '../../components/Image';
 import Navbar from '../../components/Navbar';

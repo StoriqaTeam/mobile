@@ -1,12 +1,14 @@
 import React from 'react';
-import { ScrollView, Image, View, Text } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import Button from '../../components/Buttons';
-import MainLayout from '../../layouts/MainLayout';
+import ExpandedLayout from '../../layouts/ExpandedLayout';
 import { LOGIN_BG_X } from '../../components/Image';
 import StatusIndicator from '../../components/StatusIndicator';
 import { StoreType } from '../../relay/types';
+// import Navbar from '../../components/Navbar';
+import { StoriqaIcon } from '../../components/Icons';
 
 
 type PropsType = {
@@ -14,13 +16,24 @@ type PropsType = {
 }
 
 const Stores = ({ stores }: PropsType) => (
-  <MainLayout
+  <ExpandedLayout
     backgroundURL={LOGIN_BG_X}
+    isAnimated
+    navbar={{
+      title: 'navbar title',
+      rightButton: <StoriqaIcon
+        name="person"
+        size={20}
+        color="#505050"
+        onPress={Actions.profile}
+        style={{ marginRight: 8 }}
+      />,
+   }}
   >
-    <ScrollView style={styles.wrapper}>
+    <View style={{ marginTop: 16 }}>
       {stores.map(store => (<StoreItem key={store.id} store={store} />))}
-    </ScrollView>
-  </MainLayout>
+    </View>
+  </ExpandedLayout>
 );
 
 type StorePropsType = {
@@ -33,7 +46,9 @@ const StoreItem = ({ store }: StorePropsType) => (
       <StatusIndicator state={store.isActive} />
       <Text style={styles.storeTitle}>{store.name}</Text>
       <Text style={styles.storeShortDescription}>{store.shortDescription}</Text>
-      <Image source={{ uri: store.cover }} style={{ width: 50, height: 50 }} />
+      {store.cover &&
+        <Image source={{ uri: store.cover }} style={{ width: 50, height: 50 }} />
+      }
     </View>
     <Button title="more..." onPress={() => Actions.store({ store })} />
   </View>

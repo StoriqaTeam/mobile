@@ -22,7 +22,7 @@ export default () => (
     <Router>
       <Modal hideNavBar>
         <Stack key="root">
-          <Scene key="stores" initial component={stores.StoresScreen} title="Stores Screen" />
+          <Scene key="stores" initial component={stores.StoresScreen} title="Stores Screen" hideNavBar />
           <Scene key="store" component={stores.StoreDetailScreen} title="Store detail screen" />
           <Scene key="profile" on={handleCheckAuth} component={profile.ProfileScreen} title="Profile screen" />
         </Stack>

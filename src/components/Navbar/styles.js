@@ -6,7 +6,7 @@ import {
 export default StyleSheet.create({
   navbarContainer: {
     flexDirection: 'row',
-    height: 43.5,
+    height: '100%',
     width: '100%',
     padding: 5,
     backgroundColor: '#ffffff',
@@ -17,6 +17,10 @@ export default StyleSheet.create({
     flex: 2.5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    color: 'black',
+    fontSize: 28,
   },
   leftButtonContainer: {
     flex: 1,
