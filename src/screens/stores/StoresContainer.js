@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { Text } from 'react-native';
 import { QueryRenderer, graphql } from 'react-relay';
 import { Actions } from 'react-native-router-flux';
 import R from 'ramda';

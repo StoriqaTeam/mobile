@@ -15,7 +15,7 @@ type PropsType = {
   stores: StoreType[],
 }
 
-const Stores = ({ stores }: PropsType) => (
+const Stores = (props: PropsType) => (
   <ExpandedLayout
     backgroundURL={LOGIN_BG_X}
     isAnimated
@@ -30,8 +30,9 @@ const Stores = ({ stores }: PropsType) => (
       />,
    }}
   >
+    {console.log('****** Stores props: ', props)}
     <View style={{ marginTop: 16 }}>
-      {stores.map(store => (<StoreItem key={store.id} store={store} />))}
+      {props.stores.map(store => (<StoreItem key={store.id} store={store} />))}
     </View>
   </ExpandedLayout>
 );

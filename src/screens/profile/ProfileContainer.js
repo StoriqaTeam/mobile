@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { QueryRenderer, graphql } from 'react-relay';
 import { Actions } from 'react-native-router-flux';
+import appState from '@appState';
 import relayEnvironment from '../../relay/relayEnvironment';
 import { UserType } from '../../relay/types';
 import Profile from './Profile';
@@ -51,8 +52,10 @@ ProfileContainer.navigationOptions = () => ({
 });
 
 function logout() {
-  removeTokenFromStorage();
-  Actions.root();
+  appState.logout();
+  // removeTokenFromStorage();
+  // appState.removeToken();
+  // Actions.root();
 }
 
 export default ProfileContainer;

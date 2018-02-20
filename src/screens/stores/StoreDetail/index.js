@@ -1,3 +1,4 @@
+//  @flow
 import React from 'react';
 import { Image, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -5,9 +6,9 @@ import styles from './styles';
 import { StoreType } from '../../../relay/types';
 import ExpandedLayout from '../../../layouts/ExpandedLayout';
 import { LOGIN_BG_X } from '../../../components/Image';
+import { HeaderButton } from '../../../components/Buttons';
 import { StoriqaIcon } from '../../../components/Icons';
 import StatusIndicator from '../../../components/StatusIndicator';
-import { HeaderButton } from '../../../components/Buttons';
 
 
 type PropsType = {

@@ -19,6 +19,16 @@ export function removeTokenFromStorage() {
   }
 }
 
+export function getTokenFromStorage() {
+  let token = null;
+  try {
+    token = AsyncStorage.getItem('@Storiqa:token');
+  } catch (error) {
+    console.log('- utils removeTokenFromStorage error: ', error);
+  }
+  return token;
+}
+
 // VALIDATION
 // Predicates
 export const isLengthEqual = (len: number) => (b: string) => R.length(b) === len;

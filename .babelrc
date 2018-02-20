@@ -1,6 +1,7 @@
 {
   "presets": ["react-native"],
   "plugins": [
-    "babel-plugin-relay"
+    "babel-plugin-relay",
+    "transform-decorators-legacy"
   ]
 }

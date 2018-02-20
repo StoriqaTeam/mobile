@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { pathOr } from 'ramda';
+import appState from '@appState';
 import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import Button from '../../components/Buttons';
@@ -22,8 +23,8 @@ type StateType = {
 }
 
 class Login extends React.Component<{}, StateType> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
@@ -50,11 +51,6 @@ class Login extends React.Component<{}, StateType> {
       password,
     };
     storeJWTByEmail({ input });
-  }
-
-  handleLogout = () => {
-    removeTokenFromStorage();
-    Actions.root();
   }
 
   render() {
