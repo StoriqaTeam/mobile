@@ -7,9 +7,7 @@ import * as profile from './screens/profile';
 
 
 function handleCheckAuth() {
-  console.log('*** Routes check token: ');
   AsyncStorage.getItem('@Storiqa:token').then((token) => {
-    console.log('*** Routes check token: ', token);
     if (!token) {
       Actions.login();
     }

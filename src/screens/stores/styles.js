@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { fonts } from '../../theme';
 
 
 export default StyleSheet.create({
@@ -18,6 +19,10 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   storeTitle: {
+    fontFamily: fonts.primary,
     fontSize: 18,
+  },
+  storeShortDescription: {
+    fontFamily: fonts.secondary,
   },
 });

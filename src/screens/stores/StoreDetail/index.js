@@ -9,21 +9,10 @@ import { StoriqaIcon } from '../../../components/Icons';
 import StatusIndicator from '../../../components/StatusIndicator';
 import { HeaderButton } from '../../../components/Buttons';
 
+
 type PropsType = {
   store: StoreType,
 }
-
-// navbar buttons
-const leftButton = <HeaderButton title="back" onPress={Actions.pop} />;
-const rightButton = (
-  <StoriqaIcon
-    name="person"
-    size={20}
-    color="#505050"
-    onPress={Actions.profile}
-    style={{ marginRight: 8 }}
-  />
-);
 
 class StoreDetail extends React.Component<PropsType> {
   static navigationOptions = () => ({
@@ -38,8 +27,8 @@ class StoreDetail extends React.Component<PropsType> {
         isAnimated
         navbar={{
           title: <Text>{store.name}</Text>,
-          leftButton,
-          rightButton,
+          leftButton: <HeaderButton title="back" onPress={Actions.pop} />,
+          rightButton: <StoriqaIcon name="person" size={20} color="#505050" onPress={Actions.profile} style={{ marginRight: 8 }} />,
         }}
       >
         <View style={styles.contentWrapper}>

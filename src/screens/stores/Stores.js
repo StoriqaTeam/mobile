@@ -20,7 +20,7 @@ const Stores = ({ stores }: PropsType) => (
     backgroundURL={LOGIN_BG_X}
     isAnimated
     navbar={{
-      title: <Text>Navbar Title</Text>,
+      title: <Text style={{ fontFamily: 'SFProText-Light' }}>Navbar Title</Text>,
       rightButton: <StoriqaIcon
         name="person"
         size={20}

@@ -3,7 +3,13 @@ export const colors = {
   secondary: '#000',
 };
 
+const SFTLight = 'SFProText-Light';
+const SFTRegular = 'SFProText-Regular';
+const SFTBold = 'SFProText-Semibold';
+const SFTMedium = 'SFProText-Medium';
+
 export const fonts = {
-  primary: 'SF-Pro-Text-Light',
-  secondary: '',
+  primary: SFTMedium,
+  secondary: SFTLight,
+  // SFProText
 };
