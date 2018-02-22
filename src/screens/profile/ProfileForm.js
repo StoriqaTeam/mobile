@@ -150,7 +150,7 @@ export default class ProfileForm extends React.Component<FormPropsType, FormStat
             selectedValue={user.gender}
             onValueChange={value => this.handleChangeField('gender', value)}
           >
-            {genderList.map((g, index) => <Picker.Item key={g} label={g} value={g} />)}
+            {genderList.map(g => <Picker.Item key={g} label={g} value={g} />)}
           </Picker>
           {this.renderError('gender')}
         </View>

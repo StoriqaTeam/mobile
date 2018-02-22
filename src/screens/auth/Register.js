@@ -1,17 +1,13 @@
 // @flow
-
 import React from 'react';
 import { View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { pathOr } from 'ramda';
+import appStore from '@appStore'; // eslint-disable-line
 import MainLayout from '../../layouts/MainLayout';
 import Button from '../../components/Buttons';
-import relayEnvironment from '../../relay/relayEnvironment';
 import styles from './styles';
 import { REGISTER_BG_X } from '../../components/Image';
 import { SVGIcon, GOOGLE_SVG, FACEBOOK_SVG } from '../../components/Icons';
-import { CreateUserByEmailMutation } from '../../relay/mutations';
-import { setTokenToStorage } from '../../utils';
 import ProviderButton from './ProviderButton';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
@@ -56,19 +52,7 @@ export default class Register extends React.Component<{}, StateType> {
         password,
       },
     };
-    CreateUserByEmailMutation({
-      variables,
-      environment: relayEnvironment,
-      onCompleted: (response: ?Object) => {
-        // TODO: логирование
-        // console.log('*** Register.handleRegister onCompleted response: ', response);
-        const token = pathOr(null, ['getJWTByEmail', 'token'], response);
-        // пишем token в локальное хранилище
-        if (token) setTokenToStorage(token);
-        Actions.root();
-      },
-      onError: err => console.log('/// onError: ', err), // TODO: логирование
-    });
+    appStore.registerByEmail(variables);
   }
 
   render() {

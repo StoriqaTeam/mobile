@@ -6,7 +6,7 @@ import R from 'ramda';
 import { StoriqaIcon } from '../../components/Icons';
 import relayEnvironment from '../../relay/relayEnvironment';
 import { UserType } from '../../relay/types';
-import Stores from './Stores';
+import StoresScreen from './StoresScreen';
 
 
 type PropsType = {
@@ -46,22 +46,11 @@ const StoresContainer = () => (
     query={query}
     render={(data: PropsType) => {
       const edges = R.pathOr(null, ['props', 'me', 'stores', 'edges'], data);
-      console.log('*** StoresContainer data: ', data);
-      if (!edges) return <Stores stores={[]} />;
+      if (!edges) return <StoresScreen stores={null} />;
       const stores = edges.map(obj => obj.node);
-      return <Stores stores={stores} />;
+      return <StoresScreen stores={stores} />;
     }}
   />
 );
-
-StoresContainer.navigationOptions = () => ({
-  headerRight: <StoriqaIcon
-    name="person"
-    size={20}
-    color="#505050"
-    onPress={Actions.profile}
-    style={{ marginRight: 8 }}
-  />,
-});
 
 export default StoresContainer;

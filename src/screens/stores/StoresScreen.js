@@ -1,3 +1,4 @@
+//  @flow
 import React from 'react';
 import { Image, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -7,15 +8,14 @@ import ExpandedLayout from '../../layouts/ExpandedLayout';
 import { LOGIN_BG_X } from '../../components/Image';
 import StatusIndicator from '../../components/StatusIndicator';
 import { StoreType } from '../../relay/types';
-// import Navbar from '../../components/Navbar';
 import { StoriqaIcon } from '../../components/Icons';
 
 
 type PropsType = {
-  stores: StoreType[],
+  stores?: StoreType[],
 }
 
-const Stores = (props: PropsType) => (
+const Stores = ({ stores }: PropsType) => (
   <ExpandedLayout
     backgroundURL={LOGIN_BG_X}
     isAnimated
@@ -30,11 +30,19 @@ const Stores = (props: PropsType) => (
       />,
    }}
   >
-    {console.log('****** Stores props: ', props)}
-    <View style={{ marginTop: 16 }}>
-      {props.stores.map(store => (<StoreItem key={store.id} store={store} />))}
-    </View>
+    <StoresList stores={stores} />
   </ExpandedLayout>
+);
+
+const StoresList = ({ stores }: PropsType) => (
+  <View style={{ marginTop: 16 }}>
+    {!stores &&
+      <View>
+        <Text>No stores found</Text>
+      </View>
+    }
+    {stores && stores.map(store => (<StoreItem key={store.id} store={store} />))}
+  </View>
 );
 
 type StorePropsType = {

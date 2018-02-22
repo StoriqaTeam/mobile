@@ -1,35 +1,24 @@
 import React from 'react';
-import { View, AsyncStorage } from 'react-native';
-import { Router, Modal, Stack, Scene, Actions } from 'react-native-router-flux';
+import { View } from 'react-native';
+import { Router, Modal, Stack, Scene } from 'react-native-router-flux';
 import { observer } from 'mobx-react/native';
 import * as auth from './screens/auth';
 import * as stores from './screens/stores';
 import * as profile from './screens/profile';
-import appState from './appState';
-
-
-function handleCheckAuth() {
-  // AsyncStorage.getItem('@Storiqa:token').then((token) => {
-  //   if (!token) {
-  //     Actions.login();
-  //   }
-  // });
-  // console.log('*** handleCheckAuth token: ', appState.token);
-  // if (!appState.token) Actions.login();
-}
+import { ROOT, LOGIN, REGISTER, STORES, STORE, PROFILE } from './constants';
 
 
 export default () => (
   <View style={{ flex: 1 }}>
     <Router wrapBy={observer}>
       <Modal hideNavBar>
-        <Stack key="root">
-          <Scene key="stores" hideNavBar initial component={stores.StoresScreen} on={handleCheckAuth} />
-          <Scene key="store" hideNavBar component={stores.StoreDetailScreen} on={handleCheckAuth} />
-          <Scene key="profile" component={profile.ProfileScreen} on={handleCheckAuth} />
+        <Stack key={ROOT}>
+          <Scene key={STORES} hideNavBar initial component={stores.Stores} />
+          <Scene key={STORE} hideNavBar component={stores.StoreDetail} />
+          <Scene key={PROFILE} component={profile.ProfileScreen} />
         </Stack>
-        <Scene key="login" component={auth.Login} title="Login" hideNavBar />
-        <Scene key="register" component={auth.Register} title="Register" hideNavBar />
+        <Scene key={LOGIN} component={auth.Login} hideNavBar />
+        <Scene key={REGISTER} component={auth.Register} hideNavBar />
       </Modal>
     </Router>
   </View>

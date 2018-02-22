@@ -3,17 +3,13 @@
 import React from 'react';
 import { View, Text, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { pathOr } from 'ramda';
-import appState from '@appState';
-import relayEnvironment from '../../relay/relayEnvironment';
+import appStore from '@appStore'; // eslint-disable-line
 import styles from './styles';
 import Button from '../../components/Buttons';
 import { LOGIN_BG_X } from '../../components/Image';
 import { SVGIcon, GOOGLE_SVG, FACEBOOK_SVG } from '../../components/Icons';
 import ProviderButton from './ProviderButton';
 import MainLayout from '../../layouts/MainLayout';
-import { GetJWTByEmailMutation } from '../../relay/mutations';
-import { removeTokenFromStorage, setTokenToStorage } from '../../utils';
 import { GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from '../../constants';
 
 
@@ -22,7 +18,7 @@ type StateType = {
   password: string,
 }
 
-class Login extends React.Component<{}, StateType> {
+export default class Login extends React.Component<{}, StateType> {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,12 +41,14 @@ class Login extends React.Component<{}, StateType> {
 
   handleEmailAuth = () => {
     const { email, password } = this.state;
-    const input = {
-      clientMutationId: '',
-      email,
-      password,
+    const variables = {
+      input: {
+        clientMutationId: '',
+        email,
+        password,
+      },
     };
-    storeJWTByEmail({ input });
+    appStore.loginByEmail(variables);
   }
 
   render() {
@@ -114,21 +112,3 @@ class Login extends React.Component<{}, StateType> {
     );
   }
 }
-
-function storeJWTByEmail(variables) {
-  GetJWTByEmailMutation({
-    variables,
-    environment: relayEnvironment,
-    onCompleted: (response: ?Object) => {
-      const userToken = pathOr(null, ['getJWTByEmail', 'token'], response);
-      setTokenToStorage(userToken);
-      Actions.reset('root');
-    },
-    onError: (error: Error) => {
-      console.log('*** getting user token error: ', error);
-    },
-  });
-}
-
-
-export default Login;

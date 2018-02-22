@@ -1,13 +1,12 @@
 // @flow
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { QueryRenderer, graphql } from 'react-relay';
-import { Actions } from 'react-native-router-flux';
-import appState from '@appState';
+import R from 'ramda';
+import appStore from '@appStore'; // eslint-disable-line
 import relayEnvironment from '../../relay/relayEnvironment';
 import { UserType } from '../../relay/types';
 import Profile from './Profile';
-import { removeTokenFromStorage } from '../../utils';
 
 
 type PropsType = {
@@ -37,25 +36,23 @@ const ProfileContainer = () => (
     environment={relayEnvironment}
     query={query}
     render={(data: PropsType) => {
-      if (data.props && data.props.me) return <Profile user={data.props.me} />;
-      return null;
+      const me = R.pathOr(null, ['props', 'me'], data);
+      if (me) return <Profile user={me} />;
+      return (
+        <View>
+          <Text>No user data</Text>
+        </View>
+      );
     }}
   />
 );
 
 ProfileContainer.navigationOptions = () => ({
   headerRight: (
-    <TouchableOpacity onPress={logout}>
+    <TouchableOpacity onPress={appStore.logout}>
       <Text>Logout</Text>
     </TouchableOpacity>
   ),
 });
-
-function logout() {
-  appState.logout();
-  // removeTokenFromStorage();
-  // appState.removeToken();
-  // Actions.root();
-}
 
 export default ProfileContainer;

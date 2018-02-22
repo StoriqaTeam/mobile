@@ -1,8 +1,8 @@
-import StoresScreen from './StoresContainer';
-import StoreDetailScreen from './StoreDetail';
+import Stores from './StoresContainer';
+import StoreDetail from './StoreDetail';
 
 
 export {
-  StoresScreen,
-  StoreDetailScreen,
+  Stores,
+  StoreDetail,
 };

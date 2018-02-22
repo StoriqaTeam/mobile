@@ -2,26 +2,20 @@
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import R from 'ramda';
+import appStore from '@appStore'; // eslint-disable-line
 import styles from './styles';
 import MainLayout from '../../layouts/MainLayout';
 import ProfileForm from './ProfileForm';
 import { UserType } from '../../relay/types';
-import Button from '../../components/Buttons';
-import { UpdateUserMutation } from '../../relay/mutations';
-import relayEnvironment from '../../relay/relayEnvironment';
 
 
 const handleSaveForm = (user) => {
   const userEmailExcluded = R.dissoc('email', user);
-  UpdateUserMutation({
-    variables: {
-      input: {
-        clientMutationId: '',
-        ...userEmailExcluded,
-      },
-    },
-    environment: relayEnvironment,
-  });
+  const input = {
+    clientMutationId: '',
+    ...userEmailExcluded,
+  };
+  appStore.updateUser({ input });
 };
 
 
